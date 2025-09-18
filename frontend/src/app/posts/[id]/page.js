@@ -1,10 +1,10 @@
-'use client'
+    'use client'
 
 import { use } from 'react'
 import { useEffect, useState } from 'react'
 
 export default function Posts({ params }) {
-  const { id } = use(params)  // <- unwrapping the promise
+  const { id } = use(params)  
 
   const [post, setPost] = useState(null)
 
@@ -13,8 +13,6 @@ export default function Posts({ params }) {
       .then(res => res.json())
       .then(data => setPost(data))
   }, [id])
-
-
 
   return (
     <div>
