@@ -14,6 +14,8 @@ export default function Posts({ params }) {
       .then(data => setPost(data))
   }, [id])
 
+
+
   return (
     <div>
       {post ? (
