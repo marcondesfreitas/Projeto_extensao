@@ -1,61 +1,62 @@
-'use client'
-import { useEffect, useState } from "react";
+"use client";
+import { useState } from "react";
 
-export default function Login() {
-  const [email, setEmail] = useState("")
-  const [senha, setSenha] = useState("")
-  const [users, setUsers] = useState([])
+export default function LoginPage() {
+  const [email, setEmail] = useState("");       // troquei username -> email
+  const [password, setPassword] = useState(""); // senha
+  const [mensagem, setMensagem] = useState("");
+  const [userId, setUserId] = useState(null);
 
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(res => res.json())
-      .then(data => setUsers(data))
-  }, [])
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  console.log(users)
+    try {
+      const res = await fetch("http://127.0.0.1:8000/users/login/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, senha: password }), // envia exatamente o que o backend espera
+      });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const userBusca = users.find(
-      (user) => user.email === email
-    )
-    if (userBusca) {
-      if (users.find((user) => user.username === senha)) {
-        alert("login bem sucedido")
-      } else {
-        alert("senha errada")
+      const data = await res.json();
+
+      if (!res.ok) {
+        setMensagem(data.detail || data.error || "Erro no login");
+        return;
       }
-    } else {
-      alert("email errado")
+
+      // backend atual não retorna JWT, então só salvamos id do usuário
+      setUserId(data.user.id);
+      setMensagem(`Login realizado com sucesso! Bem-vindo, ${data.user.nome}`);
+    } catch (err) {
+      console.error(err);
+      setMensagem("Erro de conexão com o servidor");
     }
-  }
+  };
 
   return (
-    <div>
+    <div style={{ maxWidth: 400, margin: "50px auto" }}>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Login</button>
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          style={{ display: "block", marginBottom: "10px", width: "100%" }}
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{ display: "block", marginBottom: "10px", width: "100%" }}
+        />
+        <button type="submit">Entrar</button>
       </form>
+      {mensagem && <p>{mensagem}</p>}
+      {userId && <p>ID do usuário: {userId}</p>}
     </div>
   );
 }
