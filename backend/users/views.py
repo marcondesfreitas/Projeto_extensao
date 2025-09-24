@@ -1,7 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import User
+from .models import User, PasswordResetToken
+
 
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
@@ -9,6 +10,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password
 import json
 
+import uuid
+from datetime import datetime, timedelta
+from django.core.mail import send_mail
+from django.contrib.auth.hashers import make_password
+import json
 
 @api_view(["POST"])
 def cadastro(request):
@@ -65,5 +71,52 @@ def login_view(request):
                 return JsonResponse({"erro" : "senha incorreta"}, status=401)
         except User.DoesNotExist:
             return JsonResponse({"error":"usuario não encontrado"}, status=404)
+    
+    return JsonResponse({"error": "Método não permitido"}, status=405)
+
+# 1️⃣ Solicitar redefinição
+@csrf_exempt
+def solicitar_redefinicao(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        email = data.get("email")
+        try:
+            user = User.objects.get(email=email)
+            token = str(uuid.uuid4())
+            PasswordResetToken.objects.create(user=user, token=token)
+            
+            link = f"http://localhost:3000/redefinir-senha?token={token}"
+            send_mail(
+                "Redefinir senha",
+                f"Clique no link para redefinir sua senha: {link}",
+                "no-reply@seusite.com",
+                [email],
+                fail_silently=False,
+            )
+            return JsonResponse({"message": "Email enviado com sucesso!"})
+        except User.DoesNotExist:
+            return JsonResponse({"error": "Email não cadastrado"}, status=404)
+    return JsonResponse({"error": "Método não permitido"}, status=405)
+
+# 2️⃣ Redefinir senha
+@csrf_exempt
+def redefinir_senha(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        token = data.get("token")
+        nova_senha = data.get("nova_senha")
+
+        try:
+            token_obj = PasswordResetToken.objects.get(token=token)
+            if not token_obj.is_valid():
+                return JsonResponse({"error": "Token expirado"}, status=400)
+            
+            user = token_obj.user
+            user.senha = make_password(nova_senha)
+            user.save()
+            token_obj.delete()  # invalida token após uso
+            return JsonResponse({"message": "Senha alterada com sucesso!"})
+        except PasswordResetToken.DoesNotExist:
+            return JsonResponse({"error": "Token inválido"}, status=400)
     
     return JsonResponse({"error": "Método não permitido"}, status=405)

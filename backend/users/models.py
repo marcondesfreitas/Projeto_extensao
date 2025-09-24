@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime, timedelta
+from django.utils import timezone 
 
 class User(models.Model):
     PERFIL_CHOICES = [ 
@@ -26,3 +28,13 @@ class User(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+
+class PasswordResetToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=64, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_valid(self):
+        return timezone.now() - self.created_at <= timedelta(hours=1)
