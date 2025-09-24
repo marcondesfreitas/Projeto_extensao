@@ -7,3 +7,4 @@ urlpatterns = [
     path("solicitar-redefinicao/", solicitar_redefinicao, name="solicitar_redefinicao"),
     path("redefinir-senha/", redefinir_senha, name="redefinir_senha"),
 ]
+

@@ -76,6 +76,8 @@ export default function Cadastro() {
 
         <button type="submit">Cadastrar</button>
       </form>
+      <Link href="/login">Já tem uma conta? Entre aqui</Link>
+
 
       {mensagem && <p style={{ marginTop: 20 }}>{mensagem}</p>}
     </div>
