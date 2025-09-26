@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { redefinirSenha } from "@/services/api";
+import "./redefinir-senha.css"; 
 
 export default function RedefinirSenhaPage() {
   const searchParams = useSearchParams();
@@ -22,7 +23,7 @@ export default function RedefinirSenhaPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "50px auto" }}>
+    <div className="container-redefinir-senha">
       <h1>Redefinir senha</h1>
       <form onSubmit={handleSubmit}>
         <input

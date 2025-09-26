@@ -1,4 +1,6 @@
 "use client";
+
+import "./page.css";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -15,7 +17,7 @@ export default function Cadastro() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     const formData = new FormData();
     formData.append("nome", nome);
     formData.append("email", email);
@@ -50,36 +52,52 @@ export default function Cadastro() {
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: "auto" }}>
-      <h1>Cadastro de Usuário</h1>
+    <div className="container-cadastro">
+      <h1>Criar conta</h1>
+      <p className="subtexto">Junte-se à comunidade para denunciar e acompanhar melhorias na sua região.</p>
+
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
-        <br />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <br />
+        <input type="text" placeholder="Seu nome completo" value={nome} onChange={(e) => setNome(e.target.value)} required />
+
+        <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
         <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
-        <br />
+
         <input type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} required />
-        <br />
+
         <input type="text" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)} required />
-        <br />
-        <input type="text" placeholder="Localização" value={localizacao} onChange={(e) => setLocalizacao(e.target.value)} />
-        <br />
 
-        <label>Foto de perfil:</label>
-        <input type="file" onChange={(e) => setFotoPerfil(e.target.files[0])} />
-        <br />
+        <div className="file-upload">
+          <label>Comprovante de residência:</label>
+          <input type="file" onChange={(e) => setComprovante(e.target.files[0])} />
+          <span className="opcional-label">opcional</span>
+        </div>
 
-        <label>Comprovante de residência:</label>
-        <input type="file" onChange={(e) => setComprovante(e.target.files[0])} />
-        <br />
+        <input type="text" placeholder="Cidade/Bairro" value={localizacao} onChange={(e) => setLocalizacao(e.target.value)} />
 
-        <button type="submit">Cadastrar</button>
+        <div className="file-upload">
+          <label>Foto:</label>
+          <input type="file" onChange={(e) => setFotoPerfil(e.target.files[0])} />
+        </div>
+
+        <div className="checkbox-termos">
+          <input type="checkbox" required />
+          <label>Aceito os termos</label>
+        </div>
+
+        <button type="submit">Criar conta</button>
       </form>
-      <Link href="/login">Já tem uma conta? Entre aqui</Link>
 
+      <div className="social-buttons">
+        <button>Google</button>
+        <button>Facebook</button>
+      </div>
 
-      {mensagem && <p style={{ marginTop: 20 }}>{mensagem}</p>}
+      <div className="link-login">
+        Já tem conta? <Link href="/login">Entrar</Link>
+      </div>
+
+      {mensagem && <p className="mensagem">{mensagem}</p>}
     </div>
   );
 }

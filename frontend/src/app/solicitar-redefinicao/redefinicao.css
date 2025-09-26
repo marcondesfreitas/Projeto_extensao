@@ -1,0 +1,78 @@
+body {
+  background-color: #e2f5e9;
+}
+
+.container-redefinicao {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.welcome-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  position: relative;
+  left: 35%;
+}
+
+.app-name {
+  font-size: 30px;
+  font-weight: bold;
+  color: #5f1f1a;
+  margin-bottom: 10px;
+}
+
+.container-redefinicao h1 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.container-redefinicao form {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-redefinicao input[type="email"] {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.container-redefinicao input[type="email"]:focus {
+  border-color: #007bff;
+}
+
+.container-redefinicao button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.container-redefinicao button:hover {
+  background-color: #0056b3;
+}
+
+.container-redefinicao p {
+  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+  color: #444;
+}

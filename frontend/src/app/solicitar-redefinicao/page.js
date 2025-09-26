@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { solicitarRedefinicao } from "@/services/api";
+import "./redefinicao.css";
 
 export default function SolicitarRedefinicaoPage() {
   const [email, setEmail] = useState("");
@@ -13,7 +14,9 @@ export default function SolicitarRedefinicaoPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "50px auto" }}>
+    <div className="container-redefinicao">
+      <p className="app-name">Vigilância Local</p>
+      <img src="/logo_icone.png" alt="Logo" className="welcome-logo" />
       <h1>Redefinir senha</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -25,7 +28,7 @@ export default function SolicitarRedefinicaoPage() {
         />
         <button type="submit">Enviar link</button>
       </form>
-      <p>{mensagem}</p>
+      {mensagem && <p>{mensagem}</p>}
     </div>
   );
 }
