@@ -57,24 +57,42 @@ def cadastro(request):
 
 @csrf_exempt
 def login_view(request):
-    if request.method ==  "POST":
+    if request.method == "POST":
         data = json.loads(request.body)
 
         email = data.get("email")
         senha = data.get("senha")
 
-        try: 
+        try:
             user = User.objects.get(email=email)
-            if check_password(senha, user.senha):
-                return JsonResponse({"message": "Login realizado com sucesso!", "user": user.nome})
-            else:
-                return JsonResponse({"erro" : "senha incorreta"}, status=401)
-        except User.DoesNotExist:
-            return JsonResponse({"error":"usuario não encontrado"}, status=404)
-    
-    return JsonResponse({"error": "Método não permitido"}, status=405)
 
-# 1️⃣ Solicitar redefinição
+            if check_password(senha, user.senha):
+
+                # Montando resposta completa do usuário
+                user_data = {
+                    "id": user.id,
+                    "nome": user.nome,
+                    "email": user.email,
+                    "telefone": user.telefone,
+                    "cpf": user.cpf,
+                    "localizacao": user.localizacao,
+                    "foto_perfil": user.foto_perfil.url if user.foto_perfil else None,
+                    "comprovante_residencia": user.comprovante_residencia.url if user.comprovante_residencia else None,
+                }
+
+                return JsonResponse({
+                    "message": "Login realizado com sucesso!",
+                    "user": user_data
+                })
+
+            else:
+                return JsonResponse({"erro": "senha incorreta"}, status=401)
+
+        except User.DoesNotExist:
+            return JsonResponse({"error": "usuario não encontrado"}, status=404)
+
+    return JsonResponse({"error": "Método não permitido"}, status=405)
+    # 1️⃣ Solicitar redefinição
 @csrf_exempt
 def solicitar_redefinicao(request):
     if request.method == "POST":
