@@ -33,6 +33,7 @@ export default function LoginPage() {
       }
 
       localStorage.setItem('logado', true);
+      localStorage.setItem('papel', data.user.papel);
       localStorage.setItem('nome', data.user.nome);
       localStorage.setItem('email', data.user.email);
       localStorage.setItem('telefone', data.user.telefone);
@@ -40,9 +41,6 @@ export default function LoginPage() {
       localStorage.setItem('localizacao', data.user.localizacao);
       localStorage.setItem('foto_perfil', data.user.foto_perfil);
       localStorage.setItem('comprovante_residencia', data.user.comprovante_residencia);
-
-
-
 
       console.log(localStorage.getItem('nome'))
       router.push('/home');

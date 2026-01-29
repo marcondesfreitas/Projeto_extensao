@@ -11,14 +11,17 @@ export default function HomePage() {
 
     const router = useRouter();
     const [nome, setNome] = useState(null)
+    const [papel, setPapel] = useState('')
 
     useEffect(() => {
 
         const logado = localStorage.getItem('logado')
         const nomeSalvo = localStorage.getItem('nome')
+        const papel_local = localStorage.getItem('papel')
 
         if (logado !== true) {
             setNome(nomeSalvo)
+            setPapel(papel_local)
         } else {
             router.push('/home');
         }
@@ -36,17 +39,17 @@ export default function HomePage() {
             <div className='menu-left'>
                 <h1>Vigilância Local</h1>
 
-                <Link href="/sobre" className="menu-link">
+                {/* <Link href="/sobre" className="menu-link">
                     <Image src="/home-icone.png" width={18} height={18} alt="home" />
                     <span>Home</span>
-                </Link>
+                </Link> */}
 
-                <Link href="/sobre" className="menu-link">
+                <Link href="/criar_postagens" className="menu-link">
                     <Image src="/adicionar-icone.png" width={18} height={18} alt="post" />
                     <span>Criar Postagem</span>
                 </Link>
 
-                <Link href="/sobre" className="menu-link">
+                <Link href="/notificacoes" className="menu-link">
                     <Image src="/notificacao-icone.png" width={18} height={18} alt="notificações" />
                     <span>Notificações</span>
                 </Link>
@@ -55,11 +58,13 @@ export default function HomePage() {
                     <Image src="/perfil-icone.png" width={18} height={18} alt="perfil" />
                     <span>Perfil</span>
                 </Link>
-
-                <Link href="/sobre" className="menu-link">
-                    <Image src="/moderador-icone.png" width={18} height={18} alt="moderador" />
-                    <span>Moderador</span>
-                </Link>
+                {papel === "moderador" && (
+                    <Link href="/sobre" className="menu-link">
+                        <Image src="/moderador-icone.png" width={18} height={18} alt="moderador" />
+                        <span>Moderador</span>
+                    </Link>
+                )}
+                
             </div>
 
             <div className='menu-bar-topo'>
@@ -68,7 +73,6 @@ export default function HomePage() {
                     placeholder="Buscar por titulo, local ou categoria"
                     className="search-input"
                 />
-
             </div>
 
             <div className='menu-filtrar'>

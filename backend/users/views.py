@@ -75,6 +75,7 @@ def login_view(request):
                     "email": user.email,
                     "telefone": user.telefone,
                     "cpf": user.cpf,
+                    "papel": user.papel,
                     "localizacao": user.localizacao,
                     "foto_perfil": user.foto_perfil.url if user.foto_perfil else None,
                     "comprovante_residencia": user.comprovante_residencia.url if user.comprovante_residencia else None,
