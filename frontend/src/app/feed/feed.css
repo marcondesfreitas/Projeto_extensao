@@ -1,0 +1,19 @@
+.div-feed {
+  position: absolute;
+  top: 10%;
+  left: 22%;
+  width: 60%;
+  height: 88vh;
+
+  border: 1px solid red;
+
+  overflow-y: auto;     /* 🔥 ESSENCIAL */
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}

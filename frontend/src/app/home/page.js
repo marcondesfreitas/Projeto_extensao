@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import Feed from '../feed/page';
 
 import './home.css';
 
@@ -73,6 +74,10 @@ export default function HomePage() {
                     placeholder="Buscar por titulo, local ou categoria"
                     className="search-input"
                 />
+            </div>
+
+            <div className='div-feed-principal'>
+                <Feed />
             </div>
 
             <div className='menu-filtrar'>
