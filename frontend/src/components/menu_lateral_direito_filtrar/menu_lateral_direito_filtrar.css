@@ -1,0 +1,65 @@
+.menu-filtrar {
+    float: right;
+    margin-right: 20px;
+    margin-top: calc(60px + 20px);
+    width: 220px;
+    background-color: #ffffff;
+    height: 120px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.menu-filtrar h1{
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 15px;
+    margin-top: 10px;
+    font-family: "Open Sans", sans-serif;
+}
+
+
+.filtros-container-1 {
+    width: 50%;
+    float: left;
+}
+
+.filtros-container-2 {
+    width: 50%;
+    float: right;
+}
+
+.pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    background-color: #E6F8EA;
+    border: 1px solid #C7EED1;
+
+    border-radius: 20px;
+    cursor: pointer;
+
+    font-size: 14px;
+    color: #337A42;
+    font-weight: 500;
+
+    transition: 0.2s ease-in-out;
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 5px;
+
+    font-family: "Open Sans", sans-serif;
+}
+
+.pill .icon {
+    font-size: 16px;
+}
+
+.pill:hover {
+    background-color: #D9F5E0;
+    transform: translateY(-1px);
+}
+
+.pill:active {
+    transform: scale(0.97);
+}

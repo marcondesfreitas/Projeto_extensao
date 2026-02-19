@@ -1,0 +1,18 @@
+.mapa-de-ocorrencias {
+    float: right;
+    margin-right: -220px;
+    margin-top: calc(190px + 20px);
+    width: 220px;
+    background-color: #ffffff;
+    height: 200px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.mapa-de-ocorrencias h1{
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 15px;
+    margin-top: 10px;
+    font-family: "Open Sans", sans-serif;
+}

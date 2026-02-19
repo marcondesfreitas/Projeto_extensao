@@ -6,6 +6,10 @@ from django.utils import timezone
 class Post(models.Model):
 
     STATUS_CHOICES = [
+                          
+                          
+                          
+                          
         ('pendente', 'Pendente'),
         ('aprovado', 'Aprovado'),
         ('resolvido', 'Resolvido'),

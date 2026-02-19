@@ -1,128 +1,69 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import Feed from '../feed/page';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import Feed from "../../components/feed/page";
+import Menu_lateral_esquerdo from "@/components/menu_lateral_esquerdo/menu_lateral_esquerdo";
 
-import './home.css';
+import "./home.css";
+import Menu_bar_topo from "@/components/menu_bar_topo/menu_bar_topo";
+import Menu_lateral_direito_filtrar from "@/components/menu_lateral_direito_filtrar/menu_lateral_direito_filtrar";
+import Mapa_ocorrencias from "@/components/mapa_ocorrencias/mapa_ocorrencias";
+import Menu_lateral_direito_notificacao from "@/components/menu_lateral_direito_notificacoes/menu_lateral_direito_notificacao";
 
 export default function HomePage() {
+  const router = useRouter();
+  const [nome, setNome] = useState(null);
+  const [papel, setPapel] = useState("");
 
-    const router = useRouter();
-    const [nome, setNome] = useState(null)
-    const [papel, setPapel] = useState('')
+  useEffect(() => {
+    const logado = localStorage.getItem("logado");
+    const nomeSalvo = localStorage.getItem("nome");
+    const papel_local = localStorage.getItem("papel");
 
-    useEffect(() => {
-
-        const logado = localStorage.getItem('logado')
-        const nomeSalvo = localStorage.getItem('nome')
-        const papel_local = localStorage.getItem('papel')
-
-        if (logado !== true) {
-            setNome(nomeSalvo)
-            setPapel(papel_local)
-        } else {
-            router.push('/home');
-        }
-
-    }, [])
-
-    function deslogar() {
-        localStorage.clear()
-        localStorage.setItem('logado', false);
-        router.push('/login');
+    if (logado !== true) {
+      setNome(nomeSalvo);
+      setPapel(papel_local);
+    } else {
+      router.push("/home");
     }
+  }, []);
 
-    return (
-        <div>
-            <div className='menu-left'>
-                <h1>Vigilância Local</h1>
+  function deslogar() {
+    localStorage.clear();
+    localStorage.setItem("logado", false);
+    router.push("/login");
+  }
 
-                {/* <Link href="/sobre" className="menu-link">
-                    <Image src="/home-icone.png" width={18} height={18} alt="home" />
-                    <span>Home</span>
-                </Link> */}
+  return (
+    <div>
 
-                <Link href="/criar_postagens" className="menu-link">
-                    <Image src="/adicionar-icone.png" width={18} height={18} alt="post" />
-                    <span>Criar Postagem</span>
-                </Link>
+      <div>
+        <Menu_lateral_esquerdo />
+      </div>
 
-                <Link href="/notificacoes" className="menu-link">
-                    <Image src="/notificacao-icone.png" width={18} height={18} alt="notificações" />
-                    <span>Notificações</span>
-                </Link>
+      <div>
+        <Menu_bar_topo />
+      </div>
 
-                <Link href="/perfil" className="menu-link">
-                    <Image src="/perfil-icone.png" width={18} height={18} alt="perfil" />
-                    <span>Perfil</span>
-                </Link>
-                {papel === "moderador" && (
-                    <Link href="/sobre" className="menu-link">
-                        <Image src="/moderador-icone.png" width={18} height={18} alt="moderador" />
-                        <span>Moderador</span>
-                    </Link>
-                )}
-                
-            </div>
+      <div>
+        <Feed />
+      </div>
 
-            <div className='menu-bar-topo'>
-                <input
-                    type="text"
-                    placeholder="Buscar por titulo, local ou categoria"
-                    className="search-input"
-                />
-            </div>
+      <div>
+        <Menu_lateral_direito_filtrar />
+      </div>
 
-            <div className='div-feed-principal'>
-                <Feed />
-            </div>
+      <div>
+        <Mapa_ocorrencias />
+      </div>
 
-            <div className='menu-filtrar'>
-                <h1>Filtrar por</h1>
-                <div className='filtros-container-1'>
-                    <button className="pill">
-                        <span className="icon">✔</span> Resolvido
-                    </button>
-                    <button className="pill">
-                        <span className="icon">⏱</span> Pendente
-                    </button>
-                </div>
-                <div className='filtros-container-2'>
-                    <button className="pill">
-                        <span className="icon">👍</span> Aprovado
-                    </button>
-                    <button className="pill">
-                        <span className="icon">📍</span> Próximo
-                    </button>
-                </div>
-            </div>
-
-            <div className='mapa-de-ocorrencias'>
-                <h1>Mapa de ocorrencias</h1>
-            </div>
-
-            <div className='notificacoes'>
-                <h1>Notificacoes</h1>
-
-                <Link href="/post/1" className="notificacao-item">
-                    <span className="icone">🤍</span>
-                    <p>Curtiram sua postagem</p>
-                </Link>
-
-                <Link href="/post/2" className="notificacao-item">
-                    <span className="icone">💬</span>
-                    <p>Comentaram em sua postagem</p>
-                </Link>
-
-                <Link href="/post/3" className="notificacao-item">
-                    <span className="icone">⏺</span>
-                    <p>Sua postagem foi aprovada</p>
-                </Link>
-            </div>
-
-        </div>
-    )
+      <div>
+        <Menu_lateral_direito_notificacao />
+      </div>
+      
+    </div>
+  );
 }
