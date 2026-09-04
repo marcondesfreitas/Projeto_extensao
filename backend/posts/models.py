@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 from django.utils import timezone
 
 class Post(models.Model):
@@ -9,12 +8,12 @@ class Post(models.Model):
                           
                           
                           
-                          
-        ('pendente', 'Pendente'),
-        ('aprovado', 'Aprovado'),
-        ('resolvido', 'Resolvido'),
-        ('rejeitado', 'Rejeitado'),
-    ]
+                            
+            ('pendente', 'Pendente'),
+            ('aprovado', 'Aprovado'),
+            ('resolvido', 'Resolvido'),
+            ('rejeitado', 'Rejeitado'),
+        ]
 
     CATEGORIA_CHOICES = [
         ('iluminacao', 'Iluminação Pública'),
@@ -72,3 +71,4 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.autor.nome}"
+        

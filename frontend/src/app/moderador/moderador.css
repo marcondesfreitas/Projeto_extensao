@@ -1,18 +1,109 @@
+/* =========================
+   ESTRUTURA DA PÁGINA
+========================= */
+
+.moderador-layout {
+    display: flex;
+
+    width: 100%;
+    min-height: 100vh;
+
+    background: var(--bg, #FAF9F6);
+}
+
+
+/* =========================
+   ÁREA DA DIREITA
+========================= */
+
+.moderador-main {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   ÁREA PRINCIPAL DO FEED
+========================= */
+
+.div-feed-principal {
+    flex: 1;
+
+    width: 100%;
+
+    padding: 45px 40px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   FEED
+========================= */
+
 .div-feed {
-  position: absolute;
-  top: 10%;
-  left: 22%;
-  width: 60%;
-  height: 88vh;
+    width: 100%;
+    max-width: 800px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
 
 
-  overflow-y: auto;     
-  overflow-x: hidden;
+/* =========================
+   MENSAGENS
+========================= */
 
-  scroll-behavior: smooth;
+.moderador-mensagem {
+    width: 100%;
 
-  box-sizing: border-box;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
+    padding: 40px 20px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid var(--line, #E4E1D8);
+    border-radius: 15px;
+
+    color: var(--ink-soft, #6B7280);
+}
+
+
+.moderador-mensagem.erro {
+    color: #b94a4a;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 800px) {
+
+    .moderador-layout {
+        display: block;
+    }
+
+
+    .moderador-main {
+        width: 100%;
+    }
+
+
+    .div-feed-principal {
+        padding: 30px 20px;
+    }
+
 }

@@ -1,18 +1,6 @@
-.div-feed {
-  position: absolute;
-  top: 12%;
-  left: 22%;
-  width: 60%;
-  height: 88vh;
-
-
-  overflow-y: auto;     
-  overflow-x: hidden;
-
-  scroll-behavior: smooth;
-
-  box-sizing: border-box;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
+.feed-estado {
+  font-family: var(--font-body, sans-serif);
+  font-size: 14px;
+  color: var(--ink-soft, #6B7280);
+  padding: 24px 0;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "./cartao_post.css";
 
-export default function PostsCard({ post, Status }) {
+export default function PostsCard({ post, Status, onAprovar, onRejeitar, onResolver }) {
   if (
     post.status?.trim().toLowerCase() !== Status.trim().toLowerCase()
   ) {
@@ -30,6 +30,37 @@ export default function PostsCard({ post, Status }) {
       <p className="descricao">{post.descricao}</p>
 
       <small className="categoria">{post.categoria}</small>
+
+      {/* Botões de moderação — só aparecem se as funções forem passadas
+          (assim, em outras telas que usam PostsCard sem moderação, eles somem). */}
+      {(onAprovar || onRejeitar || onResolver) && (
+        <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+          {onAprovar && (
+            <button
+              onClick={() => onAprovar(post.id)}
+              style={{ background: "#2e7d32", color: "#fff", padding: "6px 12px", border: "none", borderRadius: 4 }}
+            >
+              Aprovar
+            </button>
+          )}
+          {onRejeitar && (
+            <button
+              onClick={() => onRejeitar(post.id)}
+              style={{ background: "#c62828", color: "#fff", padding: "6px 12px", border: "none", borderRadius: 4 }}
+            >
+              Rejeitar
+            </button>
+          )}
+          {onResolver && (
+            <button
+              onClick={() => onResolver(post.id)}
+              style={{ background: "#1565c0", color: "#fff", padding: "6px 12px", border: "none", borderRadius: 4 }}
+            >
+              Marcar como Resolvido
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

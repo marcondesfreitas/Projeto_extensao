@@ -1,8 +1,131 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-body {
-    background-color: #f9feff;
+:root {
+  --bg: #FAF9F6;
+  --ink: #1B1F23;
+  --ink-soft: #6B7280;
+  --line: #E4E1D8;
+  --accent: #1F6F5C;
+  --accent-tint: #E7F1EE;
+  --amber: #B7791F;
+  --amber-tint: #FBF2E1;
+  --rust: #A6412B;
+  --rust-tint: #F7E9E5;
+  --slate: #3D5A80;
+  --slate-tint: #E8EDF3;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
 
+/* Estrutura geral da Home */
+.home-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
 
+.home-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.home-body {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.home-main {
+  flex: 1;
+  min-width: 0;
+  padding: 40px clamp(24px, 4vw, 56px);
+  max-width: 720px;
+}
+
+/* Busca */
+.home-search {
+  width: 100%;
+  padding: 12px 4px;
+  border: none;
+  border-bottom: 1px solid var(--ink);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+}
+
+.home-search::placeholder {
+  color: var(--ink-soft);
+}
+
+/* Faixa "Boletim" — elemento de assinatura da página */
+.home-bulletin {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 10px 0;
+  margin: 28px 0 32px;
+}
+
+.home-bulletin span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.home-bulletin strong {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* Coluna direita */
+.home-right-rail {
+  width: 260px;
+  flex-shrink: 0;
+  padding: 40px 40px 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.home-right-rail > div {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 28px;
+}
+
+.home-right-rail > div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+@media (max-width: 960px) {
+  .home-body {
+    flex-direction: column;
+  }
+  .home-right-rail {
+    width: 100%;
+    padding: 0 24px 40px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .home-right-rail > div {
+    flex: 1 1 220px;
+    border-bottom: none;
+  }
+}

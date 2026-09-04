@@ -1,20 +1,18 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import User, PasswordResetToken
 
+from .models import User, PasswordResetToken
 
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.hashers import check_password
-import json
 
-import uuid
-from datetime import datetime, timedelta
-from django.core.mail import send_mail
-from django.contrib.auth.hashers import make_password
 import json
+import uuid
+
+from django.core.mail import send_mail
+
 
 @api_view(["POST"])
 def cadastro(request):
@@ -27,23 +25,28 @@ def cadastro(request):
     cpf = request.data.get("cpf")
     senha = request.data.get("senha")
     telefone = request.data.get("telefone")
-    
     localizacao = request.data.get("localizacao")
+
     foto_perfil = request.FILES.get("foto_perfil")
     comprovante_residencia = request.FILES.get("comprovante_residencia")
 
     if User.objects.filter(email=email).exists():
-        return Response({"erro": "Usuário já existente"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"erro": "Usuário já existente"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     if User.objects.filter(cpf=cpf).exists():
-        return Response({"erro": "Usuário com CPF já cadastrado"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"erro": "Usuário com CPF já cadastrado"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
     usuario = User.objects.create(
         nome=nome,
         email=email,
-        senha=make_password(senha),  
+        senha=make_password(senha),
         telefone=telefone,
-
         localizacao=localizacao,
         cpf=cpf,
         foto_perfil=foto_perfil,
@@ -51,24 +54,49 @@ def cadastro(request):
     )
 
     return Response(
-        {"msg": "Usuário criado com sucesso"},
+        {
+            "msg": "Usuário criado com sucesso",
+            "id": usuario.id
+        },
         status=status.HTTP_201_CREATED
     )
 
+
 @csrf_exempt
 def login_view(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
 
-        email = data.get("email")
-        senha = data.get("senha")
+    if request.method == "POST":
+
+        try:
+            data = json.loads(request.body)
+
+            email = data.get("email")
+            senha = data.get("senha")
+
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"erro": "Dados inválidos"},
+                status=400
+            )
 
         try:
             user = User.objects.get(email=email)
 
             if check_password(senha, user.senha):
 
-                # Montando resposta completa do usuário
+                foto_url = None
+                comprovante_url = None
+
+                if user.foto_perfil:
+                    foto_url = request.build_absolute_uri(
+                        user.foto_perfil.url
+                    )
+
+                if user.comprovante_residencia:
+                    comprovante_url = request.build_absolute_uri(
+                        user.comprovante_residencia.url
+                    )
+
                 user_data = {
                     "id": user.id,
                     "nome": user.nome,
@@ -76,9 +104,10 @@ def login_view(request):
                     "telefone": user.telefone,
                     "cpf": user.cpf,
                     "papel": user.papel,
+                    "perfil": user.perfil,
                     "localizacao": user.localizacao,
-                    "foto_perfil": user.foto_perfil.url if user.foto_perfil else None,
-                    "comprovante_residencia": user.comprovante_residencia.url if user.comprovante_residencia else None,
+                    "foto_perfil": foto_url,
+                    "comprovante_residencia": comprovante_url,
                 }
 
                 return JsonResponse({
@@ -86,25 +115,182 @@ def login_view(request):
                     "user": user_data
                 })
 
-            else:
-                return JsonResponse({"erro": "senha incorreta"}, status=401)
+            return JsonResponse(
+                {"erro": "Senha incorreta"},
+                status=401
+            )
 
         except User.DoesNotExist:
-            return JsonResponse({"error": "usuario não encontrado"}, status=404)
 
-    return JsonResponse({"error": "Método não permitido"}, status=405)
-    # 1️⃣ Solicitar redefinição
+            return JsonResponse(
+                {"erro": "Usuário não encontrado"},
+                status=404
+            )
+
+    return JsonResponse(
+        {"erro": "Método não permitido"},
+        status=405
+    )
+
+
+@api_view(["GET", "PUT", "PATCH"])
+def editar_usuario(request, user_id):
+
+    try:
+        usuario = User.objects.get(id=user_id)
+
+    except User.DoesNotExist:
+        return Response(
+            {"erro": "Usuário não encontrado"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    if request.method == "GET":
+
+        foto_url = None
+        comprovante_url = None
+
+        if usuario.foto_perfil:
+            foto_url = request.build_absolute_uri(
+                usuario.foto_perfil.url
+            )
+
+        if usuario.comprovante_residencia:
+            comprovante_url = request.build_absolute_uri(
+                usuario.comprovante_residencia.url
+            )
+
+        return Response({
+            "id": usuario.id,
+            "nome": usuario.nome,
+            "email": usuario.email,
+            "telefone": usuario.telefone,
+            "cpf": usuario.cpf,
+            "localizacao": usuario.localizacao,
+            "perfil": usuario.perfil,
+            "papel": usuario.papel,
+            "foto_perfil": foto_url,
+            "comprovante_residencia": comprovante_url,
+        })
+
+    nome = request.data.get("nome")
+    email = request.data.get("email")
+    telefone = request.data.get("telefone")
+    cpf = request.data.get("cpf")
+    localizacao = request.data.get("localizacao")
+    perfil = request.data.get("perfil")
+    senha = request.data.get("senha")
+
+    foto_perfil = request.FILES.get("foto_perfil")
+    comprovante_residencia = request.FILES.get(
+        "comprovante_residencia"
+    )
+
+    if nome:
+        usuario.nome = nome
+
+    if email and email != usuario.email:
+
+        if User.objects.filter(email=email).exclude(
+            id=usuario.id
+        ).exists():
+
+            return Response(
+                {"erro": "Este email já está sendo usado"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        usuario.email = email
+
+    if telefone and telefone != usuario.telefone:
+
+        if User.objects.filter(telefone=telefone).exclude(
+            id=usuario.id
+        ).exists():
+
+            return Response(
+                {"erro": "Este telefone já está sendo usado"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        usuario.telefone = telefone
+
+    if cpf and cpf != usuario.cpf:
+
+        if User.objects.filter(cpf=cpf).exclude(
+            id=usuario.id
+        ).exists():
+
+            return Response(
+                {"erro": "Este CPF já está sendo usado"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        usuario.cpf = cpf
+
+    if localizacao:
+        usuario.localizacao = localizacao
+
+    if perfil:
+        usuario.perfil = perfil
+
+    if senha:
+        usuario.senha = make_password(senha)
+
+    if foto_perfil:
+        usuario.foto_perfil = foto_perfil
+
+    if comprovante_residencia:
+        usuario.comprovante_residencia = comprovante_residencia
+
+    usuario.save()
+
+    foto_url = None
+
+    if usuario.foto_perfil:
+        foto_url = request.build_absolute_uri(
+            usuario.foto_perfil.url
+        )
+
+    return Response({
+        "msg": "Perfil atualizado com sucesso!",
+        "user": {
+            "id": usuario.id,
+            "nome": usuario.nome,
+            "email": usuario.email,
+            "telefone": usuario.telefone,
+            "cpf": usuario.cpf,
+            "localizacao": usuario.localizacao,
+            "perfil": usuario.perfil,
+            "papel": usuario.papel,
+            "foto_perfil": foto_url,
+        }
+    })
+
+
 @csrf_exempt
 def solicitar_redefinicao(request):
+
     if request.method == "POST":
+
         data = json.loads(request.body)
         email = data.get("email")
+
         try:
             user = User.objects.get(email=email)
+
             token = str(uuid.uuid4())
-            PasswordResetToken.objects.create(user=user, token=token)
-            
-            link = f"http://localhost:3000/redefinir-senha?token={token}"
+
+            PasswordResetToken.objects.create(
+                user=user,
+                token=token
+            )
+
+            link = (
+                f"http://localhost:3000/"
+                f"redefinir-senha?token={token}"
+            )
+
             send_mail(
                 "Redefinir senha",
                 f"Clique no link para redefinir sua senha: {link}",
@@ -112,30 +298,66 @@ def solicitar_redefinicao(request):
                 [email],
                 fail_silently=False,
             )
-            return JsonResponse({"message": "Email enviado com sucesso!"})
-        except User.DoesNotExist:
-            return JsonResponse({"error": "Email não cadastrado"}, status=404)
-    return JsonResponse({"error": "Método não permitido"}, status=405)
 
-# 2️⃣ Redefinir senha
+            return JsonResponse({
+                "message": "Email enviado com sucesso!"
+            })
+
+        except User.DoesNotExist:
+
+            return JsonResponse(
+                {"erro": "Email não cadastrado"},
+                status=404
+            )
+
+    return JsonResponse(
+        {"erro": "Método não permitido"},
+        status=405
+    )
+
+
 @csrf_exempt
 def redefinir_senha(request):
+
     if request.method == "POST":
+
         data = json.loads(request.body)
+
         token = data.get("token")
         nova_senha = data.get("nova_senha")
 
         try:
-            token_obj = PasswordResetToken.objects.get(token=token)
+
+            token_obj = PasswordResetToken.objects.get(
+                token=token
+            )
+
             if not token_obj.is_valid():
-                return JsonResponse({"error": "Token expirado"}, status=400)
-            
+
+                return JsonResponse(
+                    {"erro": "Token expirado"},
+                    status=400
+                )
+
             user = token_obj.user
+
             user.senha = make_password(nova_senha)
             user.save()
-            token_obj.delete()  # invalida token após uso
-            return JsonResponse({"message": "Senha alterada com sucesso!"})
+
+            token_obj.delete()
+
+            return JsonResponse({
+                "message": "Senha alterada com sucesso!"
+            })
+
         except PasswordResetToken.DoesNotExist:
-            return JsonResponse({"error": "Token inválido"}, status=400)
-    
-    return JsonResponse({"error": "Método não permitido"}, status=405)
+
+            return JsonResponse(
+                {"erro": "Token inválido"},
+                status=400
+            )
+
+    return JsonResponse(
+        {"erro": "Método não permitido"},
+        status=405
+    )

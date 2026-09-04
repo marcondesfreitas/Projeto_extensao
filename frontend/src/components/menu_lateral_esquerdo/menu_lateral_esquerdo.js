@@ -1,74 +1,121 @@
-import React from "react";
+"use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from 'next/navigation';
-import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
-import "./menu_lateral.css";
+import "./menu_lateral_esquerdo.css";
 
-const Menu_lateral_esquerdo = () => {
-    
+const itens = [
+  {
+    label: "Home",
+    href: "/home",
+    icon: (
+      <path d="M3 10.5 12 3l9 7.5M5.5 9.5V20a1 1 0 0 0 1 1h4v-6h3v6h4a1 1 0 0 0 1-1V9.5" />
+    ),
+  },
+  {
+    label: "Criar Postagem",
+    href: "/criar_postagens",
+    icon: <path d="M12 3v18M3 12h18" />,
+  },
+  {
+    label: "Notificações",
+    href: "/notificacoes",
+    icon: (
+      <path d="M6 8a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6ZM9.5 19a2.5 2.5 0 0 0 5 0" />
+    ),
+  },
+  {
+    label: "Perfil",
+    href: "/perfil",
+    icon: (
+      <>
+        <circle cx="12" cy="8" r="3.2" />
+        <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" />
+      </>
+    ),
+  },
+];
+
+const itemModerador = {
+  label: "Moderador",
+  href: "/moderador",
+  icon: <path d="m12 3 7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" />,
+};
+
+export default function Menu_lateral_esquerdo() {
+  const pathname = usePathname();
   const router = useRouter();
-  const [nome, setNome] = useState(null);
+
+  const [inicial, setInicial] = useState("?");
   const [papel, setPapel] = useState("");
 
   useEffect(() => {
-    const logado = localStorage.getItem("logado");
-    const nomeSalvo = localStorage.getItem("nome");
-    const papel_local = localStorage.getItem("papel");
+    const nome = localStorage.getItem("nome");
+    const papelUsuario = localStorage.getItem("papel");
 
-    if (logado !== true) {
-      setNome(nomeSalvo);
-      setPapel(papel_local);
-    } else {
-      router.push("/home");
+    if (nome) {
+      setInicial(nome.trim().charAt(0).toUpperCase());
+    }
+
+    if (papelUsuario) {
+      setPapel(papelUsuario);
     }
   }, []);
 
+  function deslogar() {
+    localStorage.clear();
+    localStorage.setItem("logado", "false");
+    router.push("/login");
+  }
+
+  const itensVisiveis =
+    papel === "moderador" || papel === "admin"
+      ? [...itens, itemModerador]
+      : itens;
+
   return (
-    <div className="div_menu-lateral_esquerdo">
-      <div className="menu-left">
-        <h1>Vigilância Local</h1>
+    <nav className="rail">
+      <div className="rail-topo">
+        <span className="rail-marca">Vigilância Local</span>
 
-        <Link href="/home" className="menu-link">
-          <Image src="/home-icone.png" width={18} height={18} alt="home" />
-          <span>Home</span>
-        </Link>
+        <ul className="rail-lista">
+          {itensVisiveis.map((item) => {
+            const ativo = pathname === item.href;
 
-        <Link href="/criar_postagens" className="menu-link">
-          <Image src="/adicionar-icone.png" width={18} height={18} alt="post" />
-          <span>Criar Postagem</span>
-        </Link>
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`rail-link ${ativo ? "ativo" : ""}`}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {item.icon}
+                  </svg>
 
-        <Link href="/notificacoes" className="menu-link">
-          <Image
-            src="/notificacao-icone.png"
-            width={18}
-            height={18}
-            alt="notificações"
-          />
-          <span>Notificações</span>
-        </Link>
-
-        <Link href="/perfil" className="menu-link">
-          <Image src="/perfil-icone.png" width={18} height={18} alt="perfil" />
-          <span>Perfil</span>
-        </Link>
-        {papel === "moderador" && (
-          <Link href="/moderador" className="menu-link">
-            <Image
-              src="/moderador-icone.png"
-              width={18}
-              height={18}
-              alt="moderador"
-            />
-            <span>Moderador</span>
-          </Link>
-        )}
+                  <span>{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </div>
-    </div>
-  );
-};
 
-export default Menu_lateral_esquerdo;
+      <button
+        className="rail-avatar"
+        onClick={deslogar}
+        title="Sair"
+      >
+        {inicial}
+      </button>
+    </nav>
+  );
+}

@@ -10,17 +10,12 @@ const Menu_lateral_direito_filtrar = () => {
           <button className="pill">
             <span className="icon">✔</span> Resolvido
           </button>
-          <button className="pill">
-            <span className="icon">⏱</span> Pendente
-          </button>
         </div>
         <div className="filtros-container-2">
           <button className="pill">
-            <span className="icon">👍</span> Aprovado
+            <span className="icon">⏱</span> Pendente
           </button>
-          <button className="pill">
-            <span className="icon">📍</span> Próximo
-          </button>
+          
         </div>
       </div>
   )
