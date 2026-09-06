@@ -1,82 +1,206 @@
 .rail {
-  width: 220px;
-  flex-shrink: 0;
+  width: 238px;
   min-height: 100vh;
+  flex-shrink: 0;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 40px 24px;
-  border-right: 1px solid var(--line, #E4E1D8);
-  background: #ebebeb;
+  padding: 26px 18px 22px;
+  border-right: 1px solid rgba(148, 163, 184, 0.13);
+  background: #06101e;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.rail-topo {
+  width: 100%;
 }
 
 .rail-marca {
   display: block;
-  font-family: var(--font-display, serif);
-  font-size: 18px;
+  position: relative;
+  padding: 8px 12px 24px 46px;
+  color: #f7faff;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+}
+
+.rail-marca::before {
+  content: "V";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(35, 136, 255, .7);
+  border-radius: 10px;
+  color: #fff;
+  background: linear-gradient(145deg, #1677ff, #1252ad);
+  box-shadow: 0 8px 24px rgba(22, 119, 255, .28);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.rail-marca::after {
+  content: "SUA CIDADE, SUA VOZ";
+  position: absolute;
+  left: 46px;
+  bottom: 7px;
+  color: #657992;
+  font-size: 8px;
+  letter-spacing: .13em;
   font-weight: 600;
-  color: var(--ink, #1B1F23);
-  margin-bottom: 40px;
-  line-height: 1.3;
 }
 
 .rail-lista {
   list-style: none;
-  margin: 0;
+  margin: 22px 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .rail-link {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-
-  padding: 10px 8px;
-  border-radius: 4px;
-
-  font-family: var(--font-body, sans-serif);
-  font-size: 14px;
-  color: var(--ink-soft, #6B7280);
+  gap: 13px;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 0 13px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: #8798ad;
   text-decoration: none;
-
-  border-left: 2px solid transparent;
-  transition: 0.15s ease-in-out;
+  font-size: 13px;
+  font-weight: 500;
+  transition: .2s ease;
 }
 
 .rail-link svg {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 
 .rail-link:hover {
-  color: var(--ink, #1B1F23);
+  color: #dce9f8;
+  background: rgba(255, 255, 255, .035);
+  border-color: rgba(148, 163, 184, .09);
 }
 
 .rail-link.ativo {
-  color: var(--accent, #1F6F5C);
-  border-left-color: var(--accent, #1F6F5C);
-  background: var(--accent-tint, #E7F1EE);
+  color: #fff;
+  background: linear-gradient(90deg, rgba(35, 136, 255, .2), rgba(35, 136, 255, .06));
+  border-color: rgba(35, 136, 255, .2);
+  box-shadow: inset 3px 0 0 #2388ff;
+}
+
+.rail-link.ativo svg {
+  color: #4aa0ff;
 }
 
 .rail-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--line, #E4E1D8);
-  background: var(--ink, #1B1F23);
-  color: var(--bg, #FAF9F6);
-  font-family: var(--font-mono, monospace);
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(148, 163, 184, .18);
+  border-radius: 12px;
+  background: #102138;
+  color: #dceaff;
   font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: .2s ease;
 }
 
 .rail-avatar:hover {
-  background: var(--accent, #1F6F5C);
+  border-color: rgba(35, 136, 255, .55);
+  background: #153052;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .rail {
+    width: 78px;
+    padding: 22px 12px;
+  }
+
+  .rail-marca {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 0;
+  }
+
+  .rail-marca::before {
+    left: 2px;
+    top: 2px;
+  }
+
+  .rail-marca::after {
+    display: none;
+  }
+
+  .rail-link {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .rail-link span {
+    display: none;
+  }
+
+  .rail-avatar {
+    align-self: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .rail {
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    min-height: 64px;
+    height: 64px;
+    padding: 8px 10px;
+    flex-direction: row;
+    border-right: 0;
+    border-top: 1px solid rgba(148, 163, 184, .14);
+  }
+
+  .rail-topo,
+  .rail-lista {
+    width: 100%;
+    margin: 0;
+  }
+
+  .rail-marca,
+  .rail-avatar {
+    display: none;
+  }
+
+  .rail-lista {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 4px;
+  }
+
+  .rail-link {
+    width: 48px;
+    min-height: 48px;
+  }
+
+  .home-shell {
+    padding-bottom: 64px;
+  }
 }

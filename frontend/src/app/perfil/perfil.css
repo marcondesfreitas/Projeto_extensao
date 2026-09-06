@@ -1,31 +1,46 @@
+/* =========================
+   PERFIL
+========================= */
+
 .perfil-layout {
   min-height: 100vh;
   display: flex;
-  background: #faf9f6;
+  background:
+    radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.18), transparent 28%),
+    linear-gradient(135deg, #eef5ff 0%, #f7faff 48%, #edf4ff 100%);
 }
 
 .perfil-conteudo {
   flex: 1;
   min-width: 0;
+  min-height: 100vh;
 }
 
 .perfil-area {
   width: 100%;
-  padding: 45px 50px;
+  min-height: calc(100vh - 70px);
+  padding: 42px 50px 60px;
   box-sizing: border-box;
+  background-color: #12233b;
 }
 
 .perfil-card {
   width: 100%;
-  max-width: 850px;
-  margin: 20px auto;
-  padding: 32px;
+  max-width: 920px;
+  margin: 10px auto 0;
+  padding: 38px;
   box-sizing: border-box;
-  background: #ffffff;
-  border: 1px solid #e4e1d8;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(27, 31, 35, 0.04);
+  background: #162b48;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.08),
+    0 4px 14px rgba(37, 99, 235, 0.05);
 }
+
+/* =========================
+   CABEÇALHO
+========================= */
 
 .perfil-cabecalho {
   display: flex;
@@ -34,167 +49,323 @@
 }
 
 .perfil-foto-container {
-  width: 90px;
-  height: 90px;
+  width: 104px;
+  height: 104px;
   flex-shrink: 0;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.22);
 }
 
 .perfil-foto {
-  width: 90px;
-  height: 90px;
+  width: 100%;
+  height: 100%;
   display: block;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #e4e1d8;
+  border: 4px solid #ffffff;
+  box-sizing: border-box;
 }
 
 .perfil-foto-sem-imagem {
-  width: 90px;
-  height: 90px;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   border-radius: 50%;
-  background: #1b1f23;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
-  font-size: 32px;
-  font-weight: 600;
+  font-size: 36px;
+  font-weight: 700;
+  border: 4px solid #ffffff;
 }
 
 .perfil-titulo {
   flex: 1;
+  min-width: 0;
 }
 
 .perfil-titulo span,
 .editar-cabecalho span {
-  display: block;
-  margin-bottom: 7px;
-  color: #1f6f5c;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  color: #2563eb;
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.perfil-titulo span::before,
+.editar-cabecalho span::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .perfil-titulo h1,
 .editar-cabecalho h1 {
   margin: 0;
-  color: #1b1f23;
-  font-family: Georgia, serif;
+  color: #2388ff;
   font-size: 30px;
+  line-height: 1.15;
+  font-weight: 750;
+  letter-spacing: -0.7px;
 }
 
 .perfil-titulo p,
 .editar-cabecalho p {
-  margin: 7px 0 0;
-  color: #6b7280;
+  margin: 8px 0 0;
+  color: #64748b;
   font-size: 14px;
+  line-height: 1.5;
 }
 
+/* =========================
+   BOTÃO EDITAR
+========================= */
+
 .editar-perfil-btn {
-  padding: 11px 20px;
-  border: 1px solid #1f6f5c;
-  border-radius: 8px;
-  background: transparent;
-  color: #1f6f5c;
+  flex-shrink: 0;
+  padding: 12px 20px;
+  border: 1px solid #2563eb;
+  border-radius: 10px;
+  background: #12233b;
+  color: #2563eb;
   cursor: pointer;
   font-size: 14px;
-  transition: 0.2s;
+  font-weight: 700;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .editar-perfil-btn:hover {
-  background: #e7f1ee;
+  background: #2563eb;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.2);
 }
+
+.editar-perfil-btn:active {
+  transform: translateY(0);
+}
+
+
+
+.deslogar-btn  {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  border: 1px solid #eb2525;
+  border-radius: 10px;
+  background: #12233b;
+  color: #eb2525;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.deslogar-btn:hover {
+  background: #eb2525;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.2);
+}
+
+.deslogar-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   LINHA
+========================= */
 
 .perfil-linha {
   width: 100%;
   height: 1px;
-  margin: 28px 0;
-  background: #e4e1d8;
+  margin: 32px 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #dbe4f0 15%,
+    #dbe4f0 85%,
+    transparent
+  );
 }
+
+/* =========================
+   INFORMAÇÕES
+========================= */
 
 .perfil-informacoes {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px 60px;
+  gap: 16px;
 }
 
 .perfil-item {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
+  min-height: 72px;
+  padding: 16px 18px;
+  box-sizing: border-box;
+  background: #12233b;
+  border: 1px solid #e5eaf1;
+  border-radius: 13px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.perfil-item:hover {
+  background: #162b48;
+  border-color: #bfdbfe;
+  transform: translateY(-1px);
 }
 
 .perfil-item span {
-  color: #6b7280;
-  font-size: 12px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
 }
 
 .perfil-item strong {
-  color: #1b1f23;
+  color: #2388ff;
   font-size: 15px;
+  font-weight: 650;
+  line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
-.deslogar-btn {
-  width: 100%;
-  margin-top: 34px;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background: #b94b47;
-  color: #ffffff;
-  cursor: pointer;
+/* =========================
+   MENSAGENS
+========================= */
+
+.perfil-mensagem {
+  padding: 13px 16px;
+  border-radius: 11px;
+  margin: 22px 0 0;
   font-size: 14px;
-  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid transparent;
 }
 
-.deslogar-btn:hover {
-  opacity: 0.9;
+.perfil-mensagem.sucesso {
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+  color: #15803d;
 }
+
+.perfil-mensagem.erro {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+
+/* =========================
+   FORMULÁRIO DE EDIÇÃO
+========================= */
 
 .form-editar-perfil {
   width: 100%;
 }
 
 .editar-cabecalho {
-  margin-bottom: 25px;
+  margin-bottom: 28px;
 }
 
 .editar-foto-area {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #f8fafc;
 }
 
 .editar-preview-foto {
-  width: 90px;
-  height: 90px;
+  width: 104px;
+  height: 104px;
+  flex-shrink: 0;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #e4e1d8;
+  border: 4px solid #ffffff;
+  outline: 3px solid #2563eb;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.16);
+}
+
+.editar-foto-area .perfil-foto-sem-imagem {
+  width: 104px;
+  height: 104px;
+  flex-shrink: 0;
 }
 
 .input-foto {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
 }
 
 .input-foto label,
 .campo-editar label {
-  color: #1b1f23;
+  color: #1e293b;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .input-foto input {
-  max-width: 300px;
+  width: 100%;
+  max-width: 320px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #dbe3ed;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 13px;
+  cursor: pointer;
 }
+
+.input-foto input:hover {
+  border-color: #93c5fd;
+}
+
+.input-foto input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* =========================
+   GRID DOS CAMPOS
+========================= */
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 22px;
+  gap: 20px;
 }
 
 .campo-editar {
@@ -207,22 +378,40 @@
   width: 100%;
   padding: 13px 14px;
   box-sizing: border-box;
-  border: 1px solid #dcdad2;
-  border-radius: 8px;
+  border: 1px solid #dbe3ed;
+  border-radius: 10px;
   outline: none;
-  background: #faf9f6;
-  color: #1b1f23;
+  background: #f8fafc;
+  color: #172033;
   font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.campo-editar input:hover {
+  border-color: #bfdbfe;
+  background: #ffffff;
 }
 
 .campo-editar input:focus {
-  border-color: #1f6f5c;
-  box-shadow: 0 0 0 3px rgba(31, 111, 92, 0.08);
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.campo-editar input::placeholder {
+  color: #94a3b8;
 }
 
 .campo-completo {
   grid-column: 1 / -1;
 }
+
+/* =========================
+   AÇÕES
+========================= */
 
 .editar-acoes {
   display: flex;
@@ -233,46 +422,70 @@
 
 .cancelar-edicao-btn,
 .salvar-edicao-btn {
+  min-width: 130px;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .cancelar-edicao-btn {
-  border: 1px solid #dcdad2;
+  border: 1px solid #dbe3ed;
   background: #ffffff;
-  color: #555;
+  color: #475569;
+}
+
+.cancelar-edicao-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
 }
 
 .salvar-edicao-btn {
-  border: 1px solid #1f6f5c;
-  background: #1f6f5c;
+  border: 1px solid #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
+  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.18);
+}
+
+.salvar-edicao-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+}
+
+.cancelar-edicao-btn:active,
+.salvar-edicao-btn:active {
+  transform: translateY(0);
 }
 
 .salvar-edicao-btn:disabled,
 .cancelar-edicao-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-.perfil-mensagem {
-  padding: 12px 15px;
-  border-radius: 8px;
-  margin: 22px 0 0;
-  font-size: 14px;
-}
+/* =========================
+   RESPONSIVIDADE
+========================= */
 
-.perfil-mensagem.sucesso {
-  background: #e7f1ee;
-  color: #1f6f5c;
-}
+@media (max-width: 1100px) {
+  .perfil-area {
+    padding: 35px 30px 50px;
+  }
 
-.perfil-mensagem.erro {
-  background: #fff0ef;
-  color: #b94b47;
+  .perfil-card {
+    max-width: 850px;
+    padding: 32px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -280,18 +493,32 @@
     display: block;
   }
 
+  .perfil-conteudo {
+    min-height: 100vh;
+  }
+
   .perfil-area {
-    padding: 25px 20px;
+    padding: 28px 20px 45px;
+  }
+
+  .perfil-card {
+    margin-top: 5px;
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
   .perfil-card {
-    padding: 20px;
+    padding: 24px;
+    border-radius: 20px;
   }
 
   .perfil-cabecalho {
+    align-items: flex-start;
     flex-wrap: wrap;
+  }
+
+  .perfil-titulo {
+    padding-top: 3px;
   }
 
   .editar-perfil-btn {
@@ -312,12 +539,64 @@
     flex-direction: column;
   }
 
+  .input-foto {
+    width: 100%;
+  }
+
+  .input-foto input {
+    max-width: 100%;
+  }
+
   .editar-acoes {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   .cancelar-edicao-btn,
   .salvar-edicao-btn {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-area {
+    padding: 20px 12px 35px;
+  }
+
+  .perfil-card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
+
+  .perfil-cabecalho {
+    gap: 18px;
+  }
+
+  .perfil-foto-container {
+    width: 82px;
+    height: 82px;
+  }
+
+  .perfil-titulo h1,
+  .editar-cabecalho h1 {
+    font-size: 25px;
+  }
+
+  .perfil-titulo p,
+  .editar-cabecalho p {
+    font-size: 13px;
+  }
+
+  .perfil-linha {
+    margin: 25px 0;
+  }
+
+  .perfil-item {
+    padding: 14px;
+  }
+
+  .editar-preview-foto,
+  .editar-foto-area .perfil-foto-sem-imagem {
+    width: 90px;
+    height: 90px;
   }
 }

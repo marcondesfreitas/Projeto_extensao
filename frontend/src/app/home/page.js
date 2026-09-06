@@ -40,6 +40,21 @@ export default function HomePage() {
     router.push("/login");
   }
 
+  // Estado de busca e filtro, compartilhado entre a barra de busca,
+  // o filtro lateral e o feed.
+  const [termoBusca, setTermoBusca] = useState("");
+  const [filtrosAtivos, setFiltrosAtivos] = useState([]);
+
+  function alternarFiltro(chave) {
+    setFiltrosAtivos((atuais) =>
+      atuais.includes(chave) ? atuais.filter((f) => f !== chave) : [...atuais, chave]
+    );
+  }
+
+  function limparFiltros() {
+    setFiltrosAtivos([]);
+  }
+
   const hoje = new Date().toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "long",
@@ -51,7 +66,7 @@ export default function HomePage() {
       <Menu_lateral_esquerdo />
 
       <div className="home-content">
-        <Menu_bar_topo />
+        <Menu_bar_topo onBuscar={setTermoBusca} />
 
         <div className="home-body">
           <main className="home-main">
@@ -60,12 +75,16 @@ export default function HomePage() {
               <strong>{hoje}</strong>
             </div>
 
-            <Feed />
+            <Feed termoBusca={termoBusca} filtrosAtivos={filtrosAtivos} />
           </main>
 
           <aside className="home-right-rail">
             <div>
-              <Menu_lateral_direito_filtrar />
+              <Menu_lateral_direito_filtrar
+                filtrosAtivos={filtrosAtivos}
+                onAlternar={alternarFiltro}
+                onLimpar={limparFiltros}
+              />
             </div>
             <div>
               <Mapa_ocorrencias />

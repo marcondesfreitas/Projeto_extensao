@@ -5,7 +5,14 @@ import { getPosts } from "../../service/posts";
 import PostsCard from "../posts_card/posts_card";
 import "./feed.css";
 
-export default function Feed() {
+function normalizar(texto) {
+  return texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+export default function Feed({ termoBusca = "", filtrosAtivos = [] }) {
   const [posts, setPosts] = useState([]);
   const [carregando, setCarregando] = useState(true);
 
@@ -14,8 +21,7 @@ export default function Feed() {
       try {
         const data = await getPosts();
         const lista = Array.isArray(data) ? data : [];
-        // A Home mostra só o que já passou pela moderação.
-        setPosts(lista.filter((p) => p.status === "aprovado" || p.status === "resolvido"));
+        setPosts(lista.filter((p) => p.status !== "rejeitado"));
       } catch (err) {
         console.error(err);
         setPosts([]);
@@ -31,15 +37,30 @@ export default function Feed() {
     return <p className="feed-estado">Carregando ocorrências...</p>;
   }
 
-  if (posts.length === 0) {
-    return <p className="feed-estado">Nenhuma ocorrência publicada ainda.</p>;
+  const statusVisiveis = filtrosAtivos.length > 0 ? filtrosAtivos : ["aprovado", "resolvido"];
+  const termoNormalizado = normalizar(termoBusca.trim());
+
+  const postsFiltrados = posts.filter((post) => {
+    if (!statusVisiveis.includes(post.status)) return false;
+    if (termoNormalizado === "") return true;
+    const alvo = normalizar(
+      `${post.titulo || ""} ${post.localizacao || ""} ${post.categoria || ""}`
+    );
+    return alvo.includes(termoNormalizado);
+  });
+
+  if (postsFiltrados.length === 0) {
+    return (
+      <div className="feed-vazio">
+        <strong>Sua cidade, sua voz.</strong>
+        <span>Seja a primeira voz do bairro — nenhuma ocorrência por aqui ainda.</span>
+      </div>
+    );
   }
 
   return (
     <div>
-      {posts.map((post) => (
-        // Status={post.status} faz o PostsCard sempre renderizar esse item
-        // específico (o filtro interno dele compara post.status com essa prop).
+      {postsFiltrados.map((post) => (
         <PostsCard key={post.id} post={post} Status={post.status} />
       ))}
     </div>

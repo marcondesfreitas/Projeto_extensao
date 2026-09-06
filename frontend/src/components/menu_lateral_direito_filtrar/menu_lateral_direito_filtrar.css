@@ -1,65 +1,78 @@
 .menu-filtrar {
-    float: right;
-    margin-right: 20px;
-    margin-top: calc(60px + 20px);
-    width: 220px;
-    background-color: #ffffff;
-    height: 120px;
-    border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 18px;
+  border: 1px solid rgba(148, 163, 184, .13);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #0e1c30, #0b1728);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .16);
 }
 
-.menu-filtrar h1{
-    font-size: 16px;
-    font-weight: 600;
-    margin-left: 15px;
-    margin-top: 10px;
-    font-family: "Open Sans", sans-serif;
+.menu-filtrar h1 {
+  margin: 0 0 15px;
+  color: #f3f7fc;
+  font-size: 15px;
+  font-weight: 700;
 }
 
-
-.filtros-container-1 {
-    width: 50%;
-    float: left;
-}
-
+.filtros-container-1,
 .filtros-container-2 {
-    width: 50%;
-    float: right;
+  width: auto;
+  float: none;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 5px 7px 0;
 }
 
 .pill {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    background-color: #E6F8EA;
-    border: 1px solid #C7EED1;
-
-    border-radius: 20px;
-    cursor: pointer;
-
-    font-size: 14px;
-    color: #337A42;
-    font-weight: 500;
-
-    transition: 0.2s ease-in-out;
-    width: 100px;
-    margin-top: 5px;
-    margin-left: 5px;
-
-    font-family: "Open Sans", sans-serif;
-}
-
-.pill .icon {
-    font-size: 16px;
+  width: auto;
+  min-height: 34px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 11px;
+  border: 1px solid rgba(148, 163, 184, .18);
+  border-radius: 999px;
+  background: #101f34;
+  color: #91a2b8;
+  cursor: pointer;
+  font: 500 11px var(--font-body);
+  transition: .2s ease;
 }
 
 .pill:hover {
-    background-color: #D9F5E0;
-    transform: translateY(-1px);
+  border-color: rgba(35, 136, 255, .35);
+  color: #d9e9fb;
+  background: #132842;
+  transform: translateY(-1px);
 }
 
-.pill:active {
-    transform: scale(0.97);
+.pill-ativo {
+  border-color: rgba(35, 136, 255, .45);
+  background: rgba(35, 136, 255, .14);
+  color: #69adff;
+}
+
+.pill-ativo:hover {
+  background: rgba(35, 136, 255, .19);
+}
+
+.pill .icon {
+  font-size: 12px;
+}
+
+.pill-limpar {
+  width: auto;
+  clear: both;
+  margin-top: 4px;
+  border-color: rgba(255, 95, 109, .2);
+  background: rgba(255, 95, 109, .08);
+  color: #ff7c87;
+}
+
+.pill-limpar:hover {
+  border-color: rgba(255, 95, 109, .35);
+  background: rgba(255, 95, 109, .13);
 }

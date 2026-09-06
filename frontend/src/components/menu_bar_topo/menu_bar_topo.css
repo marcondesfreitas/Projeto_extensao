@@ -1,32 +1,72 @@
 .topo {
+  min-height: 76px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 24px clamp(24px, 4vw, 56px) 0;
-  background-color: ebebeb;
+  padding: 16px 34px;
+  border-bottom: 1px solid rgba(148, 163, 184, .12);
+  background: rgba(7, 17, 31, .86);
+  backdrop-filter: blur(18px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.topo-busca-caixa {
+  width: min(560px, 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .topo-icone {
-  width: 17px;
-  height: 17px;
-  color: var(--ink-soft, #6B7280);
-  flex-shrink: 0;
-  position: relative;
-  left: -40px;
+  position: absolute;
+  left: 16px;
+  width: 18px;
+  height: 18px;
+  color: #72849b;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .topo-busca {
   width: 100%;
-  max-width: 480px;
-  padding: 10px 2px;
-  border-style: solid;
-  border-color:  #0A1828;
-  font-family: var(--font-body, sans-serif);
-  font-size: 15px;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 16px 0 46px;
+  border: 1px solid rgba(148, 163, 184, .16);
+  border-radius: 12px;
   outline: none;
-  border-radius: 20px
+  background: #0d1b2e;
+  color: #eef5ff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  transition: .2s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
 }
 
 .topo-busca::placeholder {
-  color: var(--ink-soft, #6B7280);
+  color: #687a91;
+}
+
+.topo-busca:hover {
+  border-color: rgba(148, 163, 184, .28);
+}
+
+.topo-busca:focus {
+  border-color: rgba(35, 136, 255, .65);
+  box-shadow: 0 0 0 4px rgba(35, 136, 255, .08);
+}
+
+@media (max-width: 900px) {
+  .topo {
+    padding: 14px 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  .topo {
+    min-height: 68px;
+    padding: 12px 16px;
+  }
 }

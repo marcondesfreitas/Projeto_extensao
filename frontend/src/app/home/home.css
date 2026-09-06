@@ -1,131 +1,158 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #FAF9F6;
-  --ink: #1B1F23;
-  --ink-soft: #6B7280;
-  --line: #E4E1D8;
-  --accent: #1F6F5C;
-  --accent-tint: #E7F1EE;
-  --amber: #B7791F;
-  --amber-tint: #FBF2E1;
-  --rust: #A6412B;
-  --rust-tint: #F7E9E5;
-  --slate: #3D5A80;
-  --slate-tint: #E8EDF3;
-  --font-display: 'Fraunces', serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --bg: #07111f;
+  --bg-soft: #0b1728;
+  --surface: #0e1c30;
+  --surface-2: #12233b;
+  --surface-hover: #162b48;
+  --line: rgba(148, 163, 184, 0.14);
+  --line-strong: rgba(148, 163, 184, 0.24);
+  --text: #f4f7fb;
+  --text-soft: #9eacc0;
+  --text-muted: #708198;
+  --primary: #2388ff;
+  --primary-soft: rgba(35, 136, 255, 0.13);
+  --success: #36d399;
+  --success-soft: rgba(54, 211, 153, 0.12);
+  --warning: #f5c451;
+  --warning-soft: rgba(245, 196, 81, 0.12);
+  --danger: #ff5f6d;
+  --danger-soft: rgba(255, 95, 109, 0.12);
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
 }
 
 body {
-  background: var(--bg);
-  color: var(--ink);
+  background:
+    radial-gradient(circle at 72% -10%, rgba(35, 136, 255, 0.09), transparent 32%),
+    var(--bg);
+  color: var(--text);
   font-family: var(--font-body);
 }
 
-/* Estrutura geral da Home */
 .home-shell {
-  display: flex;
   min-height: 100vh;
-  background: var(--bg);
+  display: flex;
+  background: transparent;
 }
 
 .home-content {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  min-width: 0;
 }
 
 .home-body {
   display: flex;
-  gap: 48px;
   align-items: flex-start;
+  gap: 28px;
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .home-main {
   flex: 1;
   min-width: 0;
-  padding: 40px clamp(24px, 4vw, 56px);
-  max-width: 720px;
+  padding: 28px 0 60px 34px;
 }
 
-/* Busca */
-.home-search {
-  width: 100%;
-  padding: 12px 4px;
-  border: none;
-  border-bottom: 1px solid var(--ink);
-  background: transparent;
-  font-family: var(--font-body);
-  font-size: 15px;
-  color: var(--ink);
-  outline: none;
-}
-
-.home-search::placeholder {
-  color: var(--ink-soft);
-}
-
-/* Faixa "Boletim" — elemento de assinatura da página */
 .home-bulletin {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: baseline;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  padding: 10px 0;
-  margin: 28px 0 32px;
+  gap: 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 13px 17px;
+  margin: 0 0 24px;
+  background: rgba(14, 28, 48, 0.72);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
 }
 
 .home-bulletin span {
-  font-family: var(--font-mono);
+  color: #78aef1;
   font-size: 11px;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--ink-soft);
 }
 
 .home-bulletin strong {
-  font-family: var(--font-display);
-  font-size: 15px;
+  color: var(--text-soft);
+  font-size: 12px;
   font-weight: 500;
-  color: var(--ink);
 }
 
-/* Coluna direita */
 .home-right-rail {
-  width: 260px;
+  width: 290px;
   flex-shrink: 0;
-  padding: 40px 40px 40px 0;
+  padding: 28px 34px 60px 0;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 18px;
 }
 
 .home-right-rail > div {
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 28px;
+  padding: 0;
+  border: 0;
 }
 
 .home-right-rail > div:last-child {
-  border-bottom: none;
   padding-bottom: 0;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1100px) {
+  .home-body {
+    gap: 18px;
+  }
+
+  .home-main {
+    padding-left: 22px;
+  }
+
+  .home-right-rail {
+    width: 260px;
+    padding-right: 22px;
+  }
+}
+
+@media (max-width: 900px) {
   .home-body {
     flex-direction: column;
   }
+
+  .home-main {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 22px;
+  }
+
   .home-right-rail {
     width: 100%;
-    padding: 0 24px 40px;
-    flex-direction: row;
-    flex-wrap: wrap;
+    box-sizing: border-box;
+    padding: 0 22px 30px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .home-right-rail > div {
-    flex: 1 1 220px;
-    border-bottom: none;
+}
+
+@media (max-width: 600px) {
+  .home-bulletin {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .home-right-rail {
+    grid-template-columns: 1fr;
   }
 }

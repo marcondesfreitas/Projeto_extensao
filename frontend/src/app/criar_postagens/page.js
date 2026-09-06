@@ -13,8 +13,6 @@ const SeletorLocalizacaoMapa = dynamic(
     ),
   { ssr: false }
 );
-
-// Centro padrão: Juazeiro do Norte, CE
 const CENTRO_PADRAO = {
   lat: -7.2136,
   lng: -39.3122,
@@ -42,10 +40,6 @@ export default function CriarPost() {
 
   const [erroBuscaEndereco, setErroBuscaEndereco] =
     useState(null);
-
-  // =========================
-  // PEGAR LOCALIZAÇÃO ATUAL
-  // =========================
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -80,10 +74,6 @@ export default function CriarPost() {
       }
     );
   }, []);
-
-  // =========================
-  // BUSCAR ENDEREÇO
-  // =========================
 
   const CARIRI_VIEWBOX =
     '-39.55,-7.05,-39.20,-7.35';
@@ -159,19 +149,11 @@ export default function CriarPost() {
     }
   }
 
-  // =========================
-  // ALTERAR POSIÇÃO DO MAPA
-  // =========================
-
   function handleMudarPosicao(lat, lng) {
     setLatitude(lat);
     setLongitude(lng);
     setStatusLocalizacao('ok');
   }
-
-  // =========================
-  // ENVIAR POSTAGEM
-  // =========================
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -228,8 +210,6 @@ export default function CriarPost() {
         setLocalizacao('');
         setEnderecoBusca('');
         setImagem(null);
-
-        // Limpa visualmente o input de imagem
         const inputImagem =
           document.getElementById('imagem');
 
@@ -255,7 +235,7 @@ export default function CriarPost() {
     <div className="criar-post-page">
       <div className="criar-post-container">
 
-        {/* CABEÇALHO */}
+        
 
         <div className="criar-post-header">
           <div>
@@ -279,14 +259,14 @@ export default function CriarPost() {
         </div>
 
 
-        {/* CARD */}
+        
 
         <form
           onSubmit={handleSubmit}
           className="criar-post-card"
         >
 
-          {/* STATUS LOCALIZAÇÃO */}
+          
 
           {statusLocalizacao === 'buscando' && (
             <div className="alerta alerta-info">
@@ -323,7 +303,7 @@ export default function CriarPost() {
           )}
 
 
-          {/* SUCESSO */}
+          
 
           {success && (
             <div className="alerta alerta-sucesso">
@@ -336,7 +316,7 @@ export default function CriarPost() {
           )}
 
 
-          {/* ERROS */}
+          
 
           {errors && (
             <div className="alerta alerta-erro">
@@ -361,7 +341,7 @@ export default function CriarPost() {
           )}
 
 
-          {/* TÍTULO */}
+          
 
           <div className="form-group">
             <label htmlFor="titulo">
@@ -381,7 +361,7 @@ export default function CriarPost() {
           </div>
 
 
-          {/* DESCRIÇÃO */}
+          
 
           <div className="form-group">
             <label htmlFor="descricao">
@@ -400,7 +380,7 @@ export default function CriarPost() {
           </div>
 
 
-          {/* CATEGORIA */}
+          
 
           <div className="form-group">
             <label htmlFor="categoria">
@@ -442,7 +422,7 @@ export default function CriarPost() {
           </div>
 
 
-          {/* LOCALIZAÇÃO */}
+          
 
           <div className="form-group">
             <label>
@@ -487,7 +467,7 @@ export default function CriarPost() {
           </div>
 
 
-          {/* MAPA */}
+          
 
           {latitude !== null && (
             <div className="form-group">
@@ -536,7 +516,7 @@ export default function CriarPost() {
           )}
 
 
-          {/* DESCRIÇÃO DA LOCALIZAÇÃO */}
+          
 
           <div className="form-group">
             <label htmlFor="localizacao">
@@ -555,7 +535,7 @@ export default function CriarPost() {
           </div>
 
 
-          {/* IMAGEM */}
+          
 
           <div className="form-group">
             <label htmlFor="imagem">
@@ -594,7 +574,7 @@ export default function CriarPost() {
           </div>
 
 
-          {/* BOTÃO */}
+          
 
           <button
             type="submit"

@@ -1,6 +1,20 @@
-.feed-estado {
-  font-family: var(--font-body, sans-serif);
-  font-size: 14px;
-  color: var(--ink-soft, #6B7280);
-  padding: 24px 0;
+.feed-vazio {
+  background: var(--surface, #131A26);
+  border: 1px dashed var(--line, #232C3B);
+  border-radius: 14px;
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--ink-soft, #8A93A3);
+}
+
+.feed-vazio strong {
+  display: block;
+  font-family: var(--font-display, serif);
+  font-size: 16px;
+  color: var(--ink, #E6EAF0);
+  margin-bottom: 4px;
+}
+
+.feed-vazio span {
+  font-size: 13px;
 }

@@ -7,6 +7,7 @@ import "./perfil.css";
 
 import Menu_lateral_esquerdo from "@/components/menu_lateral_esquerdo/menu_lateral_esquerdo";
 import Menu_bar_topo from "@/components/menu_bar_topo/menu_bar_topo";
+import PostsCard from "@/components/posts_card/posts_card";
 
 export default function PerfilPage() {
   const router = useRouter();
@@ -19,6 +20,9 @@ export default function PerfilPage() {
     localizacao: "",
     foto: "",
   });
+
+  const [postagens, setPostagens] = useState([]);
+  const [carregandoPostagens, setCarregandoPostagens] = useState(true);
 
   const [editando, setEditando] = useState(false);
   const [salvando, setSalvando] = useState(false);
@@ -59,7 +63,83 @@ export default function PerfilPage() {
     setNovoTelefone(dadosUsuario.telefone);
     setNovoCpf(dadosUsuario.cpf);
     setNovaLocalizacao(dadosUsuario.localizacao);
+
+    const userId = localStorage.getItem("user_id");
+
+    if (userId) {
+      carregarPostagens(userId);
+    } else {
+      console.error("ID do usuário não encontrado no localStorage.");
+      setCarregandoPostagens(false);
+    }
   }, [router]);
+
+  async function carregarPostagens(userId) {
+    try {
+      setCarregandoPostagens(true);
+
+      const res = await fetch(
+        `http://127.0.0.1:8000/posts/postagens/?autor_id=${userId}`
+      );
+
+      if (!res.ok) {
+        throw new Error(`Erro HTTP: ${res.status}`);
+      }
+
+      const data = await res.json();
+
+      console.log("Postagens recebidas:", data);
+
+      setPostagens(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Erro ao carregar postagens:", error);
+      setPostagens([]);
+    } finally {
+      setCarregandoPostagens(false);
+    }
+  }
+
+  async function excluirPostagem(postId) {
+    const confirmar = window.confirm(
+      "Tem certeza que deseja excluir esta postagem?"
+    );
+
+    if (!confirmar) {
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `http://127.0.0.1:8000/posts/postagens/${postId}/`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+
+        alert(
+          data.erro ||
+            data.error ||
+            "Não foi possível excluir a postagem."
+        );
+
+        return;
+      }
+
+      setPostagens((postagensAtuais) =>
+        postagensAtuais.filter(
+          (post) => post.id !== postId
+        )
+      );
+
+      alert("Postagem excluída com sucesso!");
+    } catch (error) {
+      console.error("Erro ao excluir postagem:", error);
+      alert("Erro de conexão com o servidor.");
+    }
+  }
 
   function abrirEdicao() {
     setMensagem("");
@@ -73,7 +153,6 @@ export default function PerfilPage() {
     setNovoCpf(dados.cpf);
     setNovaLocalizacao(dados.localizacao);
     setNovaFoto(null);
-
     setEditando(false);
     setMensagem("");
   }
@@ -125,7 +204,7 @@ export default function PerfilPage() {
         return;
       }
 
-      const usuario = data.user;
+      const usuario = data.user || data;
 
       const novosDados = {
         nome: usuario.nome || "",
@@ -140,10 +219,7 @@ export default function PerfilPage() {
 
       localStorage.setItem("nome", novosDados.nome);
       localStorage.setItem("email", novosDados.email);
-      localStorage.setItem(
-        "telefone",
-        novosDados.telefone
-      );
+      localStorage.setItem("telefone", novosDados.telefone);
       localStorage.setItem("cpf", novosDados.cpf);
       localStorage.setItem(
         "localizacao",
@@ -159,13 +235,10 @@ export default function PerfilPage() {
 
       setMensagem("Perfil atualizado com sucesso!");
       setEditando(false);
-
+      setNovaFoto(null);
     } catch (err) {
       console.error(err);
-
-      setMensagem(
-        "Erro de conexão com o servidor."
-      );
+      setMensagem("Erro de conexão com o servidor.");
     } finally {
       setSalvando(false);
     }
@@ -174,7 +247,6 @@ export default function PerfilPage() {
   function deslogar() {
     localStorage.clear();
     localStorage.setItem("logado", "false");
-
     router.push("/login");
   }
 
@@ -187,7 +259,6 @@ export default function PerfilPage() {
 
         <section className="perfil-area">
           <div className="perfil-card">
-
             {!editando ? (
               <>
                 <div className="perfil-cabecalho">
@@ -198,8 +269,7 @@ export default function PerfilPage() {
                         alt={`Foto de ${dados.nome}`}
                         className="perfil-foto"
                         onError={(e) => {
-                          e.currentTarget.style.display =
-                            "none";
+                          e.currentTarget.style.display = "none";
                         }}
                       />
                     ) : (
@@ -230,6 +300,12 @@ export default function PerfilPage() {
                     onClick={abrirEdicao}
                   >
                     Editar perfil
+                  </button>
+                  <button
+                    onClick={deslogar}
+                    className="deslogar-btn"
+                  >
+                    Sair da conta
                   </button>
                 </div>
 
@@ -270,12 +346,42 @@ export default function PerfilPage() {
                   </p>
                 )}
 
-                <button
-                  onClick={deslogar}
-                  className="deslogar-btn"
-                >
-                  Sair da conta
-                </button>
+                <div className="perfil-linha" />
+
+                <div className="minhas-postagens">
+                  <div className="postagens-titulo">
+                    <span>MINHAS POSTAGENS</span>
+
+                    <h2>
+                      Postagens realizadas
+                    </h2>
+
+                    <p>
+                      Aqui estão as postagens que você criou.
+                    </p>
+                  </div>
+
+                  {carregandoPostagens ? (
+                    <div className="postagens-vazia">
+                      Carregando suas postagens...
+                    </div>
+                  ) : postagens.length === 0 ? (
+                    <div className="postagens-vazia">
+                      Você ainda não possui nenhuma postagem.
+                    </div>
+                  ) : (
+                    <div className="lista-postagens">
+                      {postagens.map((post) => (
+                        <PostsCard
+                          key={post.id}
+                          post={post}
+                          Status={post.status}
+                          onExcluir={excluirPostagem}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
               <form
@@ -291,8 +397,7 @@ export default function PerfilPage() {
                     </h1>
 
                     <p>
-                      Altere seus dados e salve as
-                      mudanças.
+                      Altere seus dados e salve as mudanças.
                     </p>
                   </div>
                 </div>
@@ -347,9 +452,7 @@ export default function PerfilPage() {
                       type="text"
                       value={novoNome}
                       onChange={(e) =>
-                        setNovoNome(
-                          e.target.value
-                        )
+                        setNovoNome(e.target.value)
                       }
                       required
                     />
@@ -362,9 +465,7 @@ export default function PerfilPage() {
                       type="email"
                       value={novoEmail}
                       onChange={(e) =>
-                        setNovoEmail(
-                          e.target.value
-                        )
+                        setNovoEmail(e.target.value)
                       }
                       required
                     />
@@ -377,9 +478,7 @@ export default function PerfilPage() {
                       type="text"
                       value={novoTelefone}
                       onChange={(e) =>
-                        setNovoTelefone(
-                          e.target.value
-                        )
+                        setNovoTelefone(e.target.value)
                       }
                       required
                     />
@@ -392,9 +491,7 @@ export default function PerfilPage() {
                       type="text"
                       value={novoCpf}
                       onChange={(e) =>
-                        setNovoCpf(
-                          e.target.value
-                        )
+                        setNovoCpf(e.target.value)
                       }
                       required
                     />
@@ -407,9 +504,7 @@ export default function PerfilPage() {
                       type="text"
                       value={novaLocalizacao}
                       onChange={(e) =>
-                        setNovaLocalizacao(
-                          e.target.value
-                        )
+                        setNovaLocalizacao(e.target.value)
                       }
                     />
                   </div>
@@ -443,7 +538,6 @@ export default function PerfilPage() {
                 </div>
               </form>
             )}
-
           </div>
         </section>
       </main>

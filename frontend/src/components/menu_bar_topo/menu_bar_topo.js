@@ -14,24 +14,26 @@ export default function Menu_bar_topo({ onBuscar }) {
 
   return (
     <div className="topo">
-      <input
-        type="text"
-        className="topo-busca"
-        placeholder="Buscar por título, local ou categoria"
-        value={termo}
-        onChange={handleChange}
-      />
-      <svg
-        className="topo-icone"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      >
-        <circle cx="11" cy="11" r="7" />
-        <path d="m21 21-4.3-4.3" />
-      </svg>
+      <div className="topo-busca-caixa">
+        <svg
+          className="topo-icone"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <input
+          type="text"
+          className="topo-busca"
+          placeholder="Buscar por título, local ou categoria"
+          value={termo}
+          onChange={handleChange}
+        />
+      </div>
     </div>
   );
 }

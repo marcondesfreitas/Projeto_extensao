@@ -1,9 +1,18 @@
+.notificacoes {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 18px;
+  border: 1px solid rgba(148, 163, 184, .13);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #0e1c30, #0b1728);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .16);
+}
+
 .notificacoes h1 {
-  font-family: var(--font-display, serif);
+  margin: 0 0 15px;
+  color: #f3f7fc;
   font-size: 15px;
-  font-weight: 600;
-  margin: 0 0 16px;
-  color: var(--ink, #1B1F23);
+  font-weight: 700;
 }
 
 .notificacoes ul {
@@ -12,33 +21,33 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 11px;
 }
 
 .notificacoes li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  font-family: var(--font-body, sans-serif);
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--ink-soft, #6B7280);
+  gap: 9px;
+  color: #778aa2;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .notificacoes li.nao-lida {
-  color: var(--ink, #1B1F23);
-  font-weight: 500;
+  color: #dce8f7;
+  font-weight: 600;
 }
 
 .ponto {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background: var(--line, #E4E1D8);
-  margin-top: 5px;
   flex-shrink: 0;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: #33465e;
 }
 
 .notificacoes li.nao-lida .ponto {
-  background: var(--accent, #1F6F5C);
+  background: #2388ff;
+  box-shadow: 0 0 10px rgba(35, 136, 255, .65);
 }
