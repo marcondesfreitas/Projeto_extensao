@@ -5,6 +5,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
+function getMediaUrl(url) {
+  if (!url) return "";
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `${API_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +26,7 @@ export default function LoginPage() {
 
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/users/login/",
+        `${API_URL}/users/login/`,
         {
           method: "POST",
           headers: {

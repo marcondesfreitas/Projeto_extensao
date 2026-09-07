@@ -9,6 +9,15 @@ import Menu_lateral_esquerdo from "@/components/menu_lateral_esquerdo/menu_later
 import Menu_bar_topo from "@/components/menu_bar_topo/menu_bar_topo";
 import PostsCard from "@/components/posts_card/posts_card";
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
+function getMediaUrl(url) {
+  if (!url) return "";
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `${API_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
 export default function PerfilPage() {
   const router = useRouter();
 
@@ -79,7 +88,7 @@ export default function PerfilPage() {
       setCarregandoPostagens(true);
 
       const res = await fetch(
-        `http://127.0.0.1:8000/posts/postagens/?autor_id=${userId}`
+        `${API_URL}/posts/postagens/?autor_id=${userId}`
       );
 
       if (!res.ok) {
@@ -110,7 +119,7 @@ export default function PerfilPage() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/posts/postagens/${postId}/`,
+        `${API_URL}/posts/postagens/${postId}/`,
         {
           method: "DELETE",
         }
@@ -142,7 +151,7 @@ export default function PerfilPage() {
   async function resolverPostagem(postId) {
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/posts/postagens/${postId}/status/`,
+        `${API_URL}/posts/postagens/${postId}/status/`,
         {
           method: "PATCH",
           headers: {
@@ -226,7 +235,7 @@ export default function PerfilPage() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/users/usuario/${userId}/`,
+        `${API_URL}/users/usuario/${userId}/`,
         {
           method: "PUT",
           body: formData,
@@ -254,7 +263,9 @@ export default function PerfilPage() {
         telefone: usuario.telefone || "",
         cpf: usuario.cpf || "",
         localizacao: usuario.localizacao || "",
-        foto: usuario.foto_perfil || dados.foto,
+        foto: usuario.foto_perfil
+          ? getMediaUrl(usuario.foto_perfil)
+          : dados.foto,
       };
 
       setDados(novosDados);

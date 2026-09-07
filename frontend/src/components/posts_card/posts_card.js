@@ -2,6 +2,15 @@ import React from "react";
 
 import "./cartao_post.css";
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
+function getMediaUrl(url) {
+  if (!url) return "";
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return `${API_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
 const CATEGORIAS = {
   iluminacao: {
     cor: "#E0A526",
@@ -121,7 +130,7 @@ export default function PostsCard({
       {post.imagem && (
         <div className="img-wrap">
           <img
-            src={`http://127.0.0.1:8000${post.imagem}`}
+            src={getMediaUrl(post.imagem)}
             alt="Imagem do post"
           />
         </div>

@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
 export default function Cadastro() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -41,7 +44,7 @@ export default function Cadastro() {
 
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/users/cadastrar-usuario/",
+        `${API_URL}/users/cadastrar-usuario/`,
         {
           method: "POST",
           body: formData,

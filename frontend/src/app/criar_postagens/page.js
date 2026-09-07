@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import './criar_post.css';
 
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
 const SeletorLocalizacaoMapa = dynamic(
   () =>
