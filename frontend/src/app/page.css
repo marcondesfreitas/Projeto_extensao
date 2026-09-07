@@ -4,9 +4,9 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #f2f5f9;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.welcome-container,
+.welcome-container * {
+  box-sizing: border-box;
 }
 
 .welcome-container {
@@ -14,94 +14,178 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #e2f5e9;
+  padding: 20px;
+  background:
+    radial-gradient(circle at top, rgba(20, 119, 255, 0.18), transparent 40%),
+    linear-gradient(135deg, #031337 0%, #06235a 50%, #021536 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .welcome-card {
-  background-color: #ffffff;
+  background: rgba(8, 29, 70, 0.96);
   width: 100%;
-  max-width: 380px;
-  padding: 40px 20px;
-  border-radius: 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  max-width: 420px;
+  min-height: 650px;
+  padding: 45px 30px;
+  border-radius: 26px;
+  border: 1px solid rgba(55, 153, 255, 0.25);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45),
+    0 0 35px rgba(0, 119, 255, 0.08);
   text-align: center;
   position: relative;
   overflow: hidden;
-  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcome-card::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: -150px;
+  right: -120px;
+  background: rgba(0, 153, 255, 0.12);
+  border-radius: 50%;
+  filter: blur(10px);
+}
+
+.welcome-card::after {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  bottom: -140px;
+  left: -120px;
+  background: rgba(0, 81, 255, 0.12);
+  border-radius: 50%;
+  filter: blur(10px);
 }
 
 .logo-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 30px;
+  position: relative;
+  z-index: 2;
 }
 
 .welcome-logo {
-  width: 80px;
-  height: 80px;
+  width: 310px;
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.app-name {
-  font-size: 22px;
-  font-weight: 600;
-  color: #1a1a1a;
+  margin-bottom: 24px;
 }
 
 .separator {
-  height: 4px;
-  background: linear-gradient(to right, #4CAF50, #2e7d32);
-  border-radius: 2px;
-  margin: 20px auto;
-  
+  width: 82%;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    #00bfff,
+    #1677ff,
+    #00bfff
+  );
+  border-radius: 10px;
+  margin: 4px auto 20px;
+  box-shadow: 0 0 12px rgba(0, 174, 255, 0.45);
+}
+
+.app-tagline {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.app-description {
+  color: #9db4d5;
+  font-size: 14px;
+  line-height: 1.7;
+  max-width: 330px;
 }
 
 .button-group {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.button-group a {
+  width: 82%;
+  text-decoration: none;
+}
+
+.btn-filled,
+.btn-outline {
+  width: 100%;
+  padding: 13px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .btn-filled {
-  background: linear-gradient(to right, #4CAF50, #2e7d32);
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 30px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 80%;
-
+  background: linear-gradient(
+    to right,
+    #168cff,
+    #0755e8
+  );
+  color: #ffffff;
+  border: 2px solid transparent;
+  box-shadow: 0 8px 20px rgba(0, 101, 255, 0.25);
 }
 
 .btn-filled:hover {
-  background: #2e7d32;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 119, 255, 0.4);
 }
 
 .btn-outline {
-  background: white;
-  color: #2e7d32;
-  padding: 12px;
-  border: 2px solid #4CAF50;
-  border-radius: 30px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s;
-  width: 80%;
+  background: transparent;
+  color: #39a9ff;
+  border: 2px solid #168cff;
 }
 
 .btn-outline:hover {
-  background: #e8f5e9;
+  background: rgba(22, 140, 255, 0.1);
+  transform: translateY(-2px);
 }
 
-.footer-text {
-  font-size: 14px;
-  color: #777;
-  margin-top: 24px;
-}
+@media (max-width: 500px) {
+  .welcome-container {
+    padding: 12px;
+  }
 
+  .welcome-card {
+    min-height: 620px;
+    padding: 35px 22px;
+    border-radius: 22px;
+  }
+
+  .welcome-logo {
+    width: 290px;
+  }
+
+  .app-tagline {
+    font-size: 18px;
+  }
+
+  .app-description {
+    font-size: 13px;
+  }
+
+  .button-group {
+    margin-top: 32px;
+  }
+}

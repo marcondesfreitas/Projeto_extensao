@@ -1,7 +1,6 @@
 "use client";
 
 import "./page.css";
-
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,12 +9,10 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensagem, setMensagem] = useState("");
-
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     setMensagem("");
 
     try {
@@ -49,43 +46,14 @@ export default function LoginPage() {
 
       const usuario = data.user;
 
-      localStorage.setItem(
-        "user_id",
-        String(usuario.id)
-      );
-
+      localStorage.setItem("user_id", String(usuario.id));
       localStorage.setItem("logado", "true");
-
-      localStorage.setItem(
-        "papel",
-        usuario.papel || ""
-      );
-
-      localStorage.setItem(
-        "perfil",
-        usuario.perfil || ""
-      );
-
-      localStorage.setItem(
-        "nome",
-        usuario.nome || ""
-      );
-
-      localStorage.setItem(
-        "email",
-        usuario.email || ""
-      );
-
-      localStorage.setItem(
-        "telefone",
-        usuario.telefone || ""
-      );
-
-      localStorage.setItem(
-        "cpf",
-        usuario.cpf || ""
-      );
-
+      localStorage.setItem("papel", usuario.papel || "");
+      localStorage.setItem("perfil", usuario.perfil || "");
+      localStorage.setItem("nome", usuario.nome || "");
+      localStorage.setItem("email", usuario.email || "");
+      localStorage.setItem("telefone", usuario.telefone || "");
+      localStorage.setItem("cpf", usuario.cpf || "");
       localStorage.setItem(
         "localizacao",
         usuario.localizacao || ""
@@ -97,9 +65,7 @@ export default function LoginPage() {
           usuario.foto_perfil
         );
       } else {
-        localStorage.removeItem(
-          "foto_perfil"
-        );
+        localStorage.removeItem("foto_perfil");
       }
 
       if (usuario.comprovante_residencia) {
@@ -108,23 +74,10 @@ export default function LoginPage() {
           usuario.comprovante_residencia
         );
       } else {
-        localStorage.removeItem(
-          "comprovante_residencia"
-        );
+        localStorage.removeItem("comprovante_residencia");
       }
 
-      console.log(
-        "Usuário logado:",
-        usuario.id
-      );
-
-      console.log(
-        "Foto do usuário:",
-        usuario.foto_perfil
-      );
-
       router.push("/home");
-
     } catch (err) {
       console.error(err);
 
@@ -140,105 +93,132 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="Div-Body">
-      <div className="Div-login">
+    <main className="vigia-login-page">
+      <div className="vigia-login-card">
 
-        <div className="Div-esquerda-login">
+        <section className="vigia-login-left">
 
-          <div className="Div_logo">
+          <div className="vigia-login-brand">
             <img
-              src="/logo_icone.png"
-              alt="logo"
-              className="Logo_img"
+              src="/icone_img.png"
+              alt="VIGIA"
+              className="vigia-login-logo"
             />
 
-            <p className="Text-Logo">
-              Vigilância Local
+            <div className="vigia-login-brand-text">
+              <span>VIGIA</span>
+              <small>VEJA. DENUNCIE. TRANSFORME.</small>
+            </div>
+          </div>
+
+          <div className="vigia-login-intro">
+            <h1>Sua cidade, sua voz.</h1>
+
+            <p>
+              Denuncie problemas da sua região,
+              acompanhe ocorrências e ajude a
+              transformar sua comunidade.
             </p>
           </div>
 
-          <p className="Text_Div_Esquerda">
-            Entre para denunciar problemas locais,
-            apoiar vizinhos e acompanhar soluções
-            na sua região.
-          </p>
+          <div className="vigia-login-footer">
+            <div className="vigia-footer-icon">
+              V
+            </div>
 
-          <div className="Div_logo_footer">
-            <img
-              src="/Logo-Icone_Footer.png"
-              alt="logo"
-              className="Logo-Icone_Footer"
-            />
+            <div>
+              <strong>Comunidade ativa</strong>
+              <span>Juntos por uma cidade melhor.</span>
+            </div>
+          </div>
 
-            <p className="Text_logo_footer">
-              Comunidade segura
+        </section>
+
+        <section className="vigia-login-right">
+
+          <div className="vigia-login-header">
+            <span>ACESSO À PLATAFORMA</span>
+
+            <h2>Entrar</h2>
+
+            <p>
+              Acesse sua conta para continuar.
             </p>
           </div>
 
-        </div>
+          <form
+            onSubmit={handleLogin}
+            className="vigia-login-form"
+          >
 
-        <div className="Div-direita-login">
+            <div className="vigia-input-group">
+              <label htmlFor="email">
+                E-mail
+              </label>
 
-          <p className="Text-Rigth-2">
-            Login
-          </p>
+              <input
+                id="email"
+                type="email"
+                placeholder="Digite seu e-mail"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+                required
+              />
+            </div>
 
-          <p className="Text-Rigth-1">
-            Use seu Email e senha para entrar.
-          </p>
+            <div className="vigia-input-group">
+              <label htmlFor="senha">
+                Senha
+              </label>
 
-          <form onSubmit={handleLogin}>
+              <input
+                id="senha"
+                type="password"
+                placeholder="Digite sua senha"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+                required
+              />
+            </div>
 
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
-              required
-              className="Input-email"
-            />
-
-            <input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
-              required
-              className="Input-senha"
-            />
+            <div className="vigia-login-options">
+              <Link href="/solicitar-redefinicao">
+                Esqueci minha senha
+              </Link>
+            </div>
 
             <button
               type="submit"
-              className="Btn-Entar"
+              className="vigia-login-button"
             >
               Entrar
             </button>
 
           </form>
 
-          <Link href="/solicitar-redefinicao">
-            Esqueci a senha
-          </Link>
-
-          <br />
-
-          <Link href="/cadastrar">
-            Criar conta
-          </Link>
-
           {mensagem && (
-            <p className="mensagem-login">
+            <p className="vigia-login-message">
               {mensagem}
             </p>
           )}
 
-        </div>
+          <div className="vigia-create-account">
+            <span>
+              Ainda não possui uma conta?
+            </span>
+
+            <Link href="/cadastrar">
+              Criar conta
+            </Link>
+          </div>
+
+        </section>
 
       </div>
-    </div>
+    </main>
   );
 }

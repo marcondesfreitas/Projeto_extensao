@@ -1,146 +1,345 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.Div-Body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f2f5f9;
-}
-
-.Div-login {
-  display: flex;
-  width: 850px;
-  background-color: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.Div-esquerda-login {
-  width: 50%;
-  background-color: #e2f5e9;
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-.Div_logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.Logo_img {
-  width: 24px;
-  height: 24px;
-}
-
-.Text-Logo {
-  font-size: 18px;
-  font-weight: bold;
-  color: #1a5f3c;
-}
-
-.Text_Div_Esquerda {
-  font-size: 15px;
-  color: #2f4f4f;
-  line-height: 1.5;
-  margin-top: 30px;
-}
-
-.Div_logo_footer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  top: 20px;
-}
-
-.Logo-Icone_Footer {
-  width: 16px;
-  height: 16px;
-}
-
-.Text_logo_footer {
-  font-size: 14px;
-  color: #2f4f4f;
-}
-
-.Div-direita-login {
-  width: 50%;
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.Text-Rigth-2 {
-  font-size: 30px;
-  font-weight: bold;
-    color: #1a5f3c;
-
-  margin-bottom: 10px;
-}
-
-.Text-Rigth-1 {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 5px;
-}
-
-.Input-email,
-.Input-senha {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-bottom: 15px;
-  font-size: 14px;
-  outline: none;
-  transition: border 0.3s;
-}
-
-.Input-email:focus,
-.Input-senha:focus {
-  border-color: #007bff;
-}
-
-.Btn-Entar {
-  background-color: #007bff;
-  color: white;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
+.vigia-login-page {
+  min-height: 100vh;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(0, 145, 255, 0.12), transparent 35%),
+    radial-gradient(circle at 85% 80%, rgba(0, 76, 255, 0.10), transparent 35%),
+    #06152f;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.vigia-login-card {
+  width: 100%;
+  max-width: 940px;
+  min-height: 570px;
+  display: flex;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(82, 156, 255, 0.25);
+  background: #0b1d39;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.vigia-login-left {
+  width: 48%;
+  padding: 55px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 35%, rgba(0, 157, 255, 0.18), transparent 32%),
+    linear-gradient(145deg, #071d45, #06142e);
+}
+
+.vigia-login-left::before {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 153, 255, 0.12);
+  right: -120px;
+  bottom: -100px;
+}
+
+.vigia-login-left::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 153, 255, 0.10);
+  right: -70px;
+  bottom: -60px;
+}
+
+.vigia-login-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.vigia-login-logo {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(0, 110, 255, 0.35));
+}
+
+.vigia-login-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vigia-login-brand-text span {
+  color: #ffffff;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.vigia-login-brand-text small {
+  color: #13aaff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.vigia-login-intro {
+  position: relative;
+  z-index: 2;
+  max-width: 350px;
+}
+
+.vigia-login-intro h1 {
+  margin: 0 0 18px;
+  color: #ffffff;
+  font-size: 36px;
+  line-height: 1.15;
+  font-weight: 750;
+}
+
+.vigia-login-intro h1::after {
+  content: "";
+  display: block;
+  width: 55px;
+  height: 4px;
+  margin-top: 18px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #08b5ff, #145eff);
+}
+
+.vigia-login-intro p {
+  margin: 0;
+  color: #91a8c5;
   font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  transition: background-color 0.3s;
+  line-height: 1.7;
 }
 
-.Btn-Entar:hover {
-  background-color: #0056b3;
+.vigia-login-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
 }
 
-a {
+.vigia-footer-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #079fff, #164cff);
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(0, 102, 255, 0.25);
+}
+
+.vigia-login-footer strong {
+  display: block;
+  color: #dcecff;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.vigia-login-footer span {
+  display: block;
+  color: #7187a4;
+  font-size: 11px;
+}
+
+.vigia-login-right {
+  width: 52%;
+  padding: 55px 58px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #0d223f;
+}
+
+.vigia-login-header {
+  margin-bottom: 32px;
+}
+
+.vigia-login-header span {
+  color: #149fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.vigia-login-header h2 {
+  margin: 9px 0 7px;
+  color: #ffffff;
+  font-size: 34px;
+  font-weight: 750;
+}
+
+.vigia-login-header p {
+  margin: 0;
+  color: #7188a6;
   font-size: 14px;
-  color: #28a745;
-  text-decoration: none;
-  margin-right: 10px;
 }
 
-a:hover {
+.vigia-login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.vigia-input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.vigia-input-group label {
+  margin-bottom: 8px;
+  color: #9db1ca;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vigia-input-group input {
+  width: 100%;
+  height: 48px;
+  padding: 0 15px;
+  border: 1px solid #29435f;
+  border-radius: 10px;
+  outline: none;
+  background: #091a31;
+  color: #ffffff;
+  font-size: 14px;
+  transition: 0.25s ease;
+}
+
+.vigia-input-group input::placeholder {
+  color: #536b87;
+}
+
+.vigia-input-group input:focus {
+  border-color: #168fff;
+  box-shadow: 0 0 0 3px rgba(22, 143, 255, 0.10);
+}
+
+.vigia-login-options {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -5px;
+  margin-bottom: 22px;
+}
+
+.vigia-login-options a {
+  color: #3caeff;
+  font-size: 12px;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.vigia-login-options a:hover {
+  color: #78caff;
   text-decoration: underline;
 }
 
-.Div-login > p {
-  margin-top: 10px;
+.vigia-login-button {
+  width: 100%;
+  height: 49px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #078fff, #155cff);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 100, 255, 0.20);
+  transition: 0.25s ease;
+}
+
+.vigia-login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 100, 255, 0.30);
+}
+
+.vigia-login-message {
+  margin: 15px 0 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 80, 80, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 60, 60, 0.08);
+  color: #ff8585;
+  font-size: 12px;
   text-align: center;
-  color: #444;
+}
+
+.vigia-create-account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 30px;
+  font-size: 13px;
+}
+
+.vigia-create-account span {
+  color: #687f9c;
+}
+
+.vigia-create-account a {
+  color: #20a7ff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.vigia-create-account a:hover {
+  color: #7bcfff;
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .vigia-login-page {
+    padding: 20px;
+  }
+
+  .vigia-login-card {
+    max-width: 520px;
+    min-height: auto;
+  }
+
+  .vigia-login-left {
+    display: none;
+  }
+
+  .vigia-login-right {
+    width: 100%;
+    padding: 45px 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vigia-login-page {
+    padding: 12px;
+  }
+
+  .vigia-login-card {
+    border-radius: 18px;
+  }
+
+  .vigia-login-right {
+    padding: 38px 24px;
+  }
+
+  .vigia-login-header h2 {
+    font-size: 30px;
+  }
 }

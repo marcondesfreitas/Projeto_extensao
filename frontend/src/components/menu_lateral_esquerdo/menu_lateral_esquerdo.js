@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-
 import "./menu_lateral_esquerdo.css";
 
 const itens = [
@@ -78,7 +77,18 @@ export default function Menu_lateral_esquerdo() {
   return (
     <nav className="rail">
       <div className="rail-topo">
-        <span className="rail-marca">Vigilância Local</span>
+        <div className="rail-marca">
+          <img
+            src="/icone_img.png"
+            alt="Vigia"
+            className="rail-logo"
+          />
+
+          <div className="rail-nome">
+            <span className="rail-titulo">VIGIA</span>
+            <span className="rail-subtitulo">VEJA. DENUNCIE. TRANSFORME.</span>
+          </div>
+        </div>
 
         <ul className="rail-lista">
           {itensVisiveis.map((item) => {

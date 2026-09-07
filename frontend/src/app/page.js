@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import "./page.css";
 
@@ -7,22 +8,33 @@ export default function BoasVindas() {
     <div className="welcome-container">
       <div className="welcome-card">
         <div className="logo-container">
-          <img src="/logo_icone.png" alt="Logo" className="welcome-logo" />
-          <h1 className="app-name">Vigilância Local</h1>
-          <div className="separator">
-            <p className="app-tagline">Entre para denunciar problemas locais, apoiar vizinhos e acompanhar soluções na sua região.</p>
-          </div>
+          <img
+            src="/logo.png"
+            alt="Vigia"
+            className="welcome-logo"
+          />
+
+          <div className="separator"></div>
+
+          <p className="app-tagline">
+            Veja. Denuncie. Transforme.
+          </p>
+
+          <p className="app-description">
+            Registre problemas da sua região, acompanhe denúncias e ajude a
+            transformar a sua comunidade.
+          </p>
         </div>
 
         <div className="button-group">
           <Link href="/login">
             <button className="btn-outline">Entrar</button>
           </Link>
+
           <Link href="/cadastrar">
             <button className="btn-filled">Criar conta</button>
           </Link>
         </div>
-
       </div>
     </div>
   );
