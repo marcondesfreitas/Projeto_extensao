@@ -19,6 +19,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
+    "vigia-backend-c07w.onrender.com",
 ]
 
 
