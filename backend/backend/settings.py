@@ -59,6 +59,14 @@ ROOT_URLCONF = "backend.urls"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://vigia-ekj4mu3q5-marcondes-projects2.vercel.app",
+    "https://vigia-3rsi7a5m4-marcondes-projects2.vercel.app",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://vigia-ekj4mu3q5-marcondes-projects2.vercel.app",
     "https://vigia-3rsi7a5m4-marcondes-projects2.vercel.app",
 ]
 
