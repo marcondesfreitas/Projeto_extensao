@@ -192,7 +192,7 @@ export default function CriarPost() {
 
     try {
       const response = await fetch(
-        `${API_URL}/posts/`,
+        `${API_URL}/posts/postagens/`,
         {
           method: 'POST',
           body: formData,

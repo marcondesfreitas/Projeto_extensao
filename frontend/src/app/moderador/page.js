@@ -73,18 +73,14 @@ const Page = () => {
   return (
     <div className="moderador-layout">
 
-      {/* MENU DA ESQUERDA */}
       <Menu_lateral_esquerdo />
 
 
-      {/* TODA A ÁREA DA DIREITA */}
       <div className="moderador-main">
 
-        {/* BARRA DE PESQUISA */}
         <Menu_bar_topo />
 
 
-        {/* FEED */}
         <main className="div-feed-principal">
 
           <div className="div-feed">

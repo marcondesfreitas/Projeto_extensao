@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getPosts } from "../../service/posts";
+import { getPosts, updatePostStatus } from "../../service/posts";
 import PostsCard from "../posts_card/posts_card";
 import "./feed.css";
 
@@ -33,6 +33,18 @@ export default function Feed({ termoBusca = "", filtrosAtivos = [] }) {
     carregar();
   }, []);
 
+  async function handleResolver(postId) {
+    try {
+      await updatePostStatus(postId, "resolvido");
+      setPosts((atuais) =>
+        atuais.map((p) => (p.id === postId ? { ...p, status: "resolvido" } : p))
+      );
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao marcar como concluído.");
+    }
+  }
+
   if (carregando) {
     return <p className="feed-estado">Carregando ocorrências...</p>;
   }
@@ -58,11 +70,25 @@ export default function Feed({ termoBusca = "", filtrosAtivos = [] }) {
     );
   }
 
+  const userId = typeof window !== "undefined" ? localStorage.getItem("user_id") : null;
+  const papel = typeof window !== "undefined" ? localStorage.getItem("papel") : null;
+  const ehModerador = papel === "moderador" || papel === "admin";
+
   return (
     <div>
-      {postsFiltrados.map((post) => (
-        <PostsCard key={post.id} post={post} Status={post.status} />
-      ))}
+      {postsFiltrados.map((post) => {
+        const ehDono = String(post.autor_id) === String(userId);
+        const podeResolver = post.status === "aprovado" && (ehDono || ehModerador);
+
+        return (
+          <PostsCard
+            key={post.id}
+            post={post}
+            Status={post.status}
+            onResolver={podeResolver ? handleResolver : undefined}
+          />
+        );
+      })}
     </div>
   );
 }

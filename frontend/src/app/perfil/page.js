@@ -129,14 +129,55 @@ export default function PerfilPage() {
       }
 
       setPostagens((postagensAtuais) =>
-        postagensAtuais.filter(
-          (post) => post.id !== postId
-        )
+        postagensAtuais.filter((post) => post.id !== postId)
       );
 
       alert("Postagem excluída com sucesso!");
     } catch (error) {
       console.error("Erro ao excluir postagem:", error);
+      alert("Erro de conexão com o servidor.");
+    }
+  }
+
+  async function resolverPostagem(postId) {
+    try {
+      const res = await fetch(
+        `http://127.0.0.1:8000/posts/postagens/${postId}/status/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status: "resolvido",
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+
+        alert(
+          data.erro ||
+            data.error ||
+            "Não foi possível marcar como concluído."
+        );
+
+        return;
+      }
+
+      setPostagens((postagensAtuais) =>
+        postagensAtuais.map((post) =>
+          post.id === postId
+            ? {
+                ...post,
+                status: "resolvido",
+              }
+            : post
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao marcar como concluído:", error);
       alert("Erro de conexão com o servidor.");
     }
   }
@@ -153,6 +194,7 @@ export default function PerfilPage() {
     setNovoCpf(dados.cpf);
     setNovaLocalizacao(dados.localizacao);
     setNovaFoto(null);
+
     setEditando(false);
     setMensagem("");
   }
@@ -247,6 +289,7 @@ export default function PerfilPage() {
   function deslogar() {
     localStorage.clear();
     localStorage.setItem("logado", "false");
+
     router.push("/login");
   }
 
@@ -301,6 +344,7 @@ export default function PerfilPage() {
                   >
                     Editar perfil
                   </button>
+
                   <button
                     onClick={deslogar}
                     className="deslogar-btn"
@@ -334,9 +378,7 @@ export default function PerfilPage() {
 
                   <div className="perfil-item">
                     <span>Localização</span>
-                    <strong>
-                      {dados.localizacao}
-                    </strong>
+                    <strong>{dados.localizacao}</strong>
                   </div>
                 </div>
 
@@ -377,6 +419,11 @@ export default function PerfilPage() {
                           post={post}
                           Status={post.status}
                           onExcluir={excluirPostagem}
+                          onResolver={
+                            post.status === "aprovado"
+                              ? resolverPostagem
+                              : undefined
+                          }
                         />
                       ))}
                     </div>
@@ -426,11 +473,48 @@ export default function PerfilPage() {
                   )}
 
                   <div className="input-foto">
-                    <label>
+                    <span className="input-foto-titulo">
                       Alterar foto de perfil
+                    </span>
+
+                    <label
+                      htmlFor="foto-perfil"
+                      className="botao-escolher-foto"
+                    >
+                      <span className="icone-foto">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4 7H7L9 4H15L17 7H20C21.1 7 22 7.9 22 9V19C22 20.1 21.1 21 20 21H4C2.9 21 2 20.1 2 19V9C2 7.9 2.9 7 4 7Z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+
+                          <circle
+                            cx="12"
+                            cy="14"
+                            r="3"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          />
+                        </svg>
+                      </span>
+
+                      <span>
+                        Escolher nova foto
+                      </span>
                     </label>
 
                     <input
+                      id="foto-perfil"
+                      className="input-foto-arquivo"
                       type="file"
                       accept="image/*"
                       onChange={(e) =>
@@ -439,6 +523,12 @@ export default function PerfilPage() {
                         )
                       }
                     />
+
+                    {novaFoto && (
+                      <span className="nome-foto-selecionada">
+                        ✓ {novaFoto.name}
+                      </span>
+                    )}
                   </div>
                 </div>
 

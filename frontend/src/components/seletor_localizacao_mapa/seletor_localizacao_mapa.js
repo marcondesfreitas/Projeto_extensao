@@ -23,8 +23,6 @@ function CliqueNoMapa({ onMover }) {
   return null;
 }
 
-// key força o Leaflet a recentralizar quando a busca por endereço muda a
-// posição de fora (o MapContainer só lê "center" na primeira renderização).
 export default function SeletorLocalizacaoMapa({ latitude, longitude, onMudarPosicao }) {
   const posicao = [latitude, longitude];
 

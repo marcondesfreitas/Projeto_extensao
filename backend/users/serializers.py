@@ -2,7 +2,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import users
 
-# Serializer para JWT login
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -11,7 +10,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['email'] = self.user.email
         return data
 
-# Serializer para cadastro
 class RegisterSerializer(serializers.ModelSerializer):
     senha = serializers.CharField(write_only=True)
 

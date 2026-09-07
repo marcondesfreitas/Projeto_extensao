@@ -40,8 +40,6 @@ export default function HomePage() {
     router.push("/login");
   }
 
-  // Estado de busca e filtro, compartilhado entre a barra de busca,
-  // o filtro lateral e o feed.
   const [termoBusca, setTermoBusca] = useState("");
   const [filtrosAtivos, setFiltrosAtivos] = useState([]);
 
