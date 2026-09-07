@@ -1,13 +1,17 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+
 from .models import User, PasswordResetToken
+
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+
 import json
 import uuid
-from django.core.mail import send_mail
+import os
+import resend
 
 
 @api_view(["POST"])
@@ -62,10 +66,8 @@ def login_view(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-
             email = data.get("email")
             senha = data.get("senha")
-
         except json.JSONDecodeError:
             return JsonResponse(
                 {"erro": "Dados inválidos"},
@@ -128,7 +130,6 @@ def login_view(request):
 def editar_usuario(request, user_id):
     try:
         usuario = User.objects.get(id=user_id)
-
     except User.DoesNotExist:
         return Response(
             {"erro": "Usuário não encontrado"},
@@ -280,28 +281,80 @@ def solicitar_redefinicao(request):
             token=token
         )
 
-        link = f"http://localhost:3000/redefinir-senha?token={token}"
+        frontend_url = os.getenv(
+            "FRONTEND_URL",
+            "http://localhost:3000"
+        ).rstrip("/")
 
-        send_mail(
-            "Redefinir senha - Vigia",
-            f"""Olá, {user.nome}!
+        link = f"{frontend_url}/redefinir-senha?token={token}"
 
-Recebemos uma solicitação para redefinir sua senha no Vigia.
+        resend.api_key = os.getenv("RESEND_API_KEY")
 
-Clique no link abaixo para criar uma nova senha:
-
-{link}
-
-Se você não solicitou essa alteração, ignore este email.
-
-Este link é válido por tempo limitado.
-
-Equipe Vigia
-""",
-            "vigialocalcariri@gmail.com",
-            [email],
-            fail_silently=False,
+        from_email = os.getenv(
+            "RESEND_FROM_EMAIL",
+            "onboarding@resend.dev"
         )
+
+        params = {
+            "from": from_email,
+            "to": [email],
+            "subject": "Redefinir senha - Vigia",
+            "html": f"""
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px;">
+                    <h1 style="color: #123b6d;">Vigia</h1>
+
+                    <h2>Redefinição de senha</h2>
+
+                    <p>Olá, {user.nome}!</p>
+
+                    <p>
+                        Recebemos uma solicitação para redefinir sua senha
+                        no Vigia.
+                    </p>
+
+                    <p>
+                        Clique no botão abaixo para criar uma nova senha:
+                    </p>
+
+                    <p style="margin: 30px 0;">
+                        <a
+                            href="{link}"
+                            style="
+                                display: inline-block;
+                                background: #123b6d;
+                                color: white;
+                                text-decoration: none;
+                                padding: 14px 24px;
+                                border-radius: 8px;
+                                font-weight: bold;
+                            "
+                        >
+                            Redefinir minha senha
+                        </a>
+                    </p>
+
+                    <p>
+                        Se o botão não funcionar, copie e cole este endereço
+                        no navegador:
+                    </p>
+
+                    <p>{link}</p>
+
+                    <p>
+                        Se você não solicitou essa alteração, ignore este
+                        email.
+                    </p>
+
+                    <p>
+                        Equipe Vigia
+                    </p>
+                </div>
+            """
+        }
+
+        resultado = resend.Emails.send(params)
+
+        print(">>> EMAIL ENVIADO PELO RESEND:", resultado)
 
         return JsonResponse({
             "message": "Email enviado com sucesso!"
@@ -314,7 +367,7 @@ Equipe Vigia
         )
 
     except Exception as e:
-        print("ERRO AO ENVIAR EMAIL:", e)
+        print("ERRO AO ENVIAR EMAIL PELO RESEND:", e)
 
         return JsonResponse(
             {"erro": "Não foi possível enviar o email"},
